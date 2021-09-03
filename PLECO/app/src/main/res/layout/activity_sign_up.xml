@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SignUpActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLECO"
+        android:textSize="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:textColor="#8BC34A"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/nickname_inputbox"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="닉네임을 입력하세요"
+            android:textColorHint="#575656"/>
+
+        <Button
+            android:id="@+id/nickname_ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:text="중복 확인"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textColor="#009688"
+            android:background="#CDDC39"
+            />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/password1_inputbox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:hint="비밀번호를 입력하세요"
+        android:textColorHint="#575656"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/password2_inputbox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:hint="비밀번호를 다시 입력하세요"
+        android:textColorHint="#575656"
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:id="@+id/signup_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignUp"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        android:background="#8BC34A"
+        />
+
+</LinearLayout>
