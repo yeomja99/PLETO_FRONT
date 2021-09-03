@@ -1,11 +1,15 @@
 package com.example.myapplication.interfaces
 
 import com.example.myapplication.communication.Email
-import com.example.myapplication.communication.User
+import com.example.myapplication.communication.SignUpOkCheck
+import com.example.myapplication.communication.UserInfo
+import com.example.myapplication.communication.UserToken
 import retrofit2.Call
 import retrofit2.http.*
 
 interface RetrofitService {
+
+        // 밑에 주석은 예시임. 참고만 할 것
         // 회원가입 POST
 //    @POST("users")
 //    @FormUrlEncoded // Field를 하나하나 보낼 때 적어줘야 함
@@ -17,23 +21,23 @@ interface RetrofitService {
 
         // 회원가입 POST
         @Headers("content-type: application/json")
-        @POST("signup")
+        @POST("signup") // base url 뒤에 오는 url을 적을 것
         fun register(
-            @Body user: User   // nickname, password
-        ): Call<User>
+            @Body userInfo: UserInfo   // nickname, password
+        ): Call<SignUpOkCheck>
 
         // 닉네임 중복 확인 GET
         // 서버 완성되면 수정할 것
         @Headers("content-type: application/json")
         @GET("signup")
         fun getNicknameIsExist(
-            @Query("nickname") nickname: String
+            @Query("email") email: String // query는 ? 뒤에 오는 것
         ): Call<Email>
 
         // 로그인 POST
         @Headers("content-type: application/json")
         @POST("login")
         fun login(
-            @Body params: HashMap<String, String>
-        ): Call<User>
+            @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
+        ): Call<UserToken>
 }

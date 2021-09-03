@@ -18,6 +18,7 @@ class MasterApplication : Application() {
     }
 
     fun createRetrofit() {
+        // 헤더에 토큰 넣어서 보내는 과정이 필요한가 ? ? 여긴 일단 나중에 수정
         val header = Interceptor {
             val original = it.request()
 
@@ -35,7 +36,7 @@ class MasterApplication : Application() {
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://3.35.46.179:8080/")
+            .baseUrl("http://3.35.46.179:8080/")    // 서버 배포되면 수정
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

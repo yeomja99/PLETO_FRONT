@@ -9,7 +9,8 @@ import android.util.Log
 import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.communication.MasterApplication
-import com.example.myapplication.communication.User
+import com.example.myapplication.communication.UserInfo
+import com.example.myapplication.communication.UserToken
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,15 +40,16 @@ class SignInActivity : AppCompatActivity() {
 
             (application as MasterApplication).service.login(
                 body
-            ).enqueue(object : Callback<User> {
-                override fun onFailure(call: Call<User>, t: Throwable) {
+            ).enqueue(object : Callback<UserToken> { // ! Callback 은 반드시 retrofit 의 Callback 을 사용할 것 !
+                override fun onFailure(call: Call<UserToken>, t: Throwable) {    // 통신 실패
                     Toast.makeText(this@SignInActivity, "로그인에 실패했습니다", Toast.LENGTH_LONG).show()
                 }
 
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+                override fun onResponse(call: Call<UserToken>, response: Response<UserToken>) {   // 통신 성공
                     if (response.isSuccessful) {
-                        val user = response.body()
-                        val token = response.headers().get("Authorization").toString()
+                        val user = response.body()  // email, password, token
+                        val token = user!!.token;   // token을 body에서 얻어오는 것으로 변경
+//                        val token = response.headers().get("Authorization").toString()  // user token
                         Log.d("user", token)
                         Log.d("User", user.toString())
                         saveUserToken(token, this@SignInActivity)
