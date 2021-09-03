@@ -17,6 +17,9 @@ import retrofit2.Response
 
 class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sign_in)
+
         go_signup_btn.setOnClickListener {
             startActivity(
                 Intent(this@SignInActivity, SignUpActivity::class.java)
@@ -50,8 +53,8 @@ class SignInActivity : AppCompatActivity() {
                         saveUserToken(token, this@SignInActivity)
                         (application as MasterApplication).createRetrofit()
                         Toast.makeText(this@SignInActivity, "환영합니다!", Toast.LENGTH_LONG).show()
-                        startActivity(
-                            Intent(this@SignInActivity, UploadedEcoActivity::class.java)
+                        startActivity (
+                            Intent(this@SignInActivity, MainActivity::class.java)
                         )
                     }
                 }
