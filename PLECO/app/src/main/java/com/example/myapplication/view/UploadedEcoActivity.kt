@@ -39,8 +39,8 @@ class UploadedEcoActivity : AppCompatActivity() {
         Log.d("이미지in업로디드", imageUri)
 
         if (intent.hasExtra("image") || intent.hasExtra("label") || intent.hasExtra("uri")) {
-            iv_food.setImageBitmap(photoImage)
-            tv_food_name.text = labelList[labelidx]
+            iv_eco.setImageBitmap(photoImage)
+            tv_eco_name.text = labelList[labelidx]
         } else {
             Toast.makeText(this, "Image Error!", Toast.LENGTH_SHORT).show()
         }
@@ -66,7 +66,39 @@ class UploadedEcoActivity : AppCompatActivity() {
        // Save Image
        // Use Shared Preferences : string array
        // key(img uri) + food name
-       btn_save.setOnClickListener{
+//       btn_save.setOnClickListener{
+//           // Saves image URI as string to Default Shared Preferences
+//           var photos = ReadPhotosData()!!
+//           var dup = 0
+//
+//           Log.d("이미지 sp in Uploaded", photos.toString())
+//
+//           for (photo in ReadPhotosData()) {
+//               // 중복 저장 방지를 위한 mode 추가
+//               if (photo?.uri == imageUri)
+//                   dup = 1
+//               Log.d("이미지데이터 in Uploaded",photo?.uri + " : " + photo?.eco_id + "\n") // 잘 받아와 진당 ㅠㅠㅠㅠㅠㅠㅠ
+//           }
+//
+//           if (dup == 0 ){
+//               // 이미지가 sp에 없을 경우 저장
+//               photos.add(Photo(imageUri, labelList[labelidx]))
+//               SavePhotoData(photos)
+//               startActivity(intentToView)
+//           }
+//           else {
+//               Toast.makeText(this, "이미 존재하는 사진입니다.", Toast.LENGTH_LONG).show()
+//               startActivity(intentToUpload)
+//           }
+//
+//           this@UploadedEcoActivity.finish()
+//
+//
+//           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
+//       }
+
+       Camera2_EcoGallery.setOnClickListener {
+
            // Saves image URI as string to Default Shared Preferences
            var photos = ReadPhotosData()!!
            var dup = 0
@@ -92,15 +124,6 @@ class UploadedEcoActivity : AppCompatActivity() {
            }
 
            this@UploadedEcoActivity.finish()
-
-
-           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-       }
-
-       Camera2_EcoGallery.setOnClickListener {
-           var camera22ecogallery_intent: Intent = Intent(this, ViewEcoActivity::class.java)
-           startActivity(camera22ecogallery_intent)
-           finish()
 
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
