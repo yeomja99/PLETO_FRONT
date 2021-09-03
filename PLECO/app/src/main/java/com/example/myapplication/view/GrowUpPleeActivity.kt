@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
 import com.example.myapplication.R
+import com.example.myapplication.utils.GrowUpPleeRetrofitService
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
+import retrofit2.Retrofit
 
 
-val tutorialnum: Int = 1// tutorial 미션 횟수 저장 변수
 val missionnum1: Int = 2// 1단계 미션 횟수 저장 변수
 val missionnum2: Int = 5// 2단계 미션 횟수 저장 변수
 
 class GrowUpPleeActivity : AppCompatActivity() {
+    private var PleeListSize = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        액티비티 전환 애니메이션 참고: https://greedy0110.tistory.com/52
@@ -20,6 +24,11 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_grow_up_plee)
 
+            //1. 서버에서 데이터 받고
+
+            //2. 함수에 필요한 값 전달
+
+            //3. 처리한 값 서버에 보내주기
 
         Growup_EcoGallery.setOnClickListener {
             var growup2ecogallery_intent: Intent = Intent(this, ViewEcoActivity::class.java)
@@ -34,7 +43,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
             finish()
 
             overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-
         }
         Growup.setOnClickListener {
             var growup_intent: Intent = Intent(this, GrowUpPleeActivity::class.java)
@@ -42,7 +50,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
             finish()
 
             overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-
         }
         Growup_Userinfo.setOnClickListener {
             var growup2userinfo_intent: Intent = Intent(this, UserInfoActivity::class.java)
@@ -50,17 +57,8 @@ class GrowUpPleeActivity : AppCompatActivity() {
             finish()
 
             overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-
         }
 
-        btn_move2pleelist.setOnClickListener {
-            var move2pleelist_intent = Intent(this, PleeListActivity::class.java)
-            startActivity(move2pleelist_intent)
-            finish()
-
-            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-
-        }
     }
 
     override fun onResume() {
@@ -136,8 +134,8 @@ class GrowUpPleeActivity : AppCompatActivity() {
     }
 
     //     2) Plee 초기화(Plee 생성)
-//    2-1) 튜토리얼 함수
-//        - 미션 1회 진행시 성장(seed -> plant, 중간 단계 제거)
+    //    2-1) 튜토리얼 함수
+    //        - 미션 1회 진행시 성장(seed -> plant, 중간 단계 제거)
     private fun PleeTutorial() {
 
     }
@@ -145,7 +143,8 @@ class GrowUpPleeActivity : AppCompatActivity() {
     //    2-2) Plee 생성 함수
 //        - Plee가 존재하지 않을 때: random으로 Plee 생성
 //        - 성장이 완료된 Plee가 존재할 때: 성장이 완료된 Plee 제외한 다른 Plee random으로 생성
+//        - Plee 만든 마지막 상태 보내주기(아직 미션중이야, 미션 다완료해서 다 컸어)
     fun CreatePlee() {
-
+//        1. complete를 받으면 생성하기(string)
     }
 }
