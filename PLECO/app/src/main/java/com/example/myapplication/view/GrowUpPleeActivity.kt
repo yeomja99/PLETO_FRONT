@@ -4,10 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.example.myapplication.R
+import com.example.myapplication.communication.Email
+import com.example.myapplication.communication.MasterApplication
+import com.example.myapplication.communication.SignUpOkCheck
+import com.example.myapplication.utils.GrowPleeData
 import com.example.myapplication.utils.GrowUpPleeRetrofitService
+import com.example.myapplication.utils.PleeDictData
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
+import java.util.ArrayList
 
 
 val missionnum1: Int = 2// 1단계 미션 횟수 저장 변수
@@ -24,11 +34,30 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_grow_up_plee)
 
-            //1. 서버에서 데이터 받고
+        var existedPleeList : PleeDictData = GetPleeList()
+        // 유저가 생성한 Plee가 없다면
+        if (existedPleeList.pleeList!!.size == 0){
+            // 튜토리얼 플리 생성
+            // 플리 저장 리스트 가져오고
+            // 가져온 플리 중에 T(tutorial)로 분류된 플리 이름, 사진 불러오기
+            // 불러온 플리를 layout에 띄워주기
+            // 튜토리얼 플리 정보 보내주기(플리 이름, 미션 완료 횟수)
+        }
 
-            //2. 함수에 필요한 값 전달
+        // 유저가 튜토리얼 plee만 생성했다면
+        else if (existedPleeList.pleeList!!.size >= 1){
+            // Complete 일 때
+            // 플리 저장 리스트 가져오고
+            // 가져온 플리 중에 R(real) 로 분류된 플리 이름, 사진 불러오기
+            // 불러온 플리를 layout에 띄워주기
+            // 실제 플리 정보 보내주기(플리 이름, 미션 완료 횟수)
 
-            //3. 처리한 값 서버에 보내주기
+            // Growing 일 때
+            // 기존 정보 유지
+        }
+
+        // plee를 다 모았을 경우
+        // 당신은 진정한 지구지킴이! 텍스트 띄우기
 
         Growup_EcoGallery.setOnClickListener {
             var growup2ecogallery_intent: Intent = Intent(this, ViewEcoActivity::class.java)
@@ -90,20 +119,18 @@ class GrowUpPleeActivity : AppCompatActivity() {
         var GrowingRate: Int = 0
 
         // 0 --> 1 단계
-        if (ecoedState[0] == 0){
-            if (ecoedState[1] == 0){
+        if (ecoedState[0] == 0) {
+            if (ecoedState[1] == 0) {
                 GrowingRate = 0
-            }
-            else if (ecoedState[1] > 0){
+            } else if (ecoedState[1] > 0) {
                 GrowingRate = ecoedState[1] / missionnum1 * 100
             }
         }
         // 1 --> 2 단계
-        else if (ecoedState[0] == 1){
-            if (ecoedState[1] == 0){
+        else if (ecoedState[0] == 1) {
+            if (ecoedState[1] == 0) {
                 GrowingRate = 0
-            }
-            else if (ecoedState[1] > 0){
+            } else if (ecoedState[1] > 0) {
                 GrowingRate = ecoedState[1] / missionnum2 * 100
             }
         }
@@ -114,7 +141,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
     // 현재 Plee 단계 체크 함수
     private fun CheckState(ecoedNum: Int): Array<Int> {
-        var ecoedState : Array<Int> = arrayOf(0, 0) // 첫번째 원소: 단계, 두번째 원소: 다음 단계까지 남은 미션 수
+        var ecoedState: Array<Int> = arrayOf(0, 0) // 첫번째 원소: 단계, 두번째 원소: 다음 단계까지 남은 미션 수
         if (ecoedNum < missionnum1) {
             ecoedState[0] = 0
             ecoedState[1] = ecoedNum
@@ -129,9 +156,60 @@ class GrowUpPleeActivity : AppCompatActivity() {
     }
 
     //    1-2) 현재 Plee data get() 함수
-    private fun PleeDataGet() {
+    private fun GetGrowingPleeData(): GrowPleeData {
+        lateinit var growingPlee: GrowPleeData
+        (application as MasterApplication).service.GetGrowPlee(growingPlee)
+            .enqueue(object :
+                Callback<GrowPleeData> {  // ! Callback 은 반드시 retrofit 의 Callback 을 사용할 것 !
+                override fun onFailure(
+                    call: Call<GrowPleeData>,
+                    t: Throwable
+                ) {    // 통신 실패
+                    Toast.makeText(this@GrowUpPleeActivity, "서버 통신 오류", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onResponse(
+                    call: Call<GrowPleeData>,
+                    response: Response<GrowPleeData>
+                ) {   // 통신 성공
+                    val result = response.body()
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        growingPlee.ecoCount = result?.ecoCount
+                        growingPlee.pleeName = result?.pleeName
+                    }
+                }
+            })
+        return growingPlee
 
     }
+
+    private fun GetPleeList() : PleeDictData{
+        lateinit var exsitedPleeList: PleeDictData
+        (application as MasterApplication).service.GetPleelist(exsitedPleeList)
+            .enqueue(object :
+                Callback<PleeDictData> {  // ! Callback 은 반드시 retrofit 의 Callback 을 사용할 것 !
+                override fun onFailure(
+                    call: Call<PleeDictData>,
+                    t: Throwable
+                ) {    // 통신 실패
+                    Toast.makeText(this@GrowUpPleeActivity, "서버 통신 오류", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onResponse(
+                    call: Call<PleeDictData>,
+                    response: Response<PleeDictData>
+                ) {   // 통신 성공
+                    val result = response.body()
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        exsitedPleeList = result!!
+                    }
+                }
+            })
+        return exsitedPleeList
+    }
+
 
     //     2) Plee 초기화(Plee 생성)
     //    2-1) 튜토리얼 함수
@@ -141,10 +219,10 @@ class GrowUpPleeActivity : AppCompatActivity() {
     }
 
     //    2-2) Plee 생성 함수
-//        - Plee가 존재하지 않을 때: random으로 Plee 생성
-//        - 성장이 완료된 Plee가 존재할 때: 성장이 완료된 Plee 제외한 다른 Plee random으로 생성
-//        - Plee 만든 마지막 상태 보내주기(아직 미션중이야, 미션 다완료해서 다 컸어)
+    //        - Plee가 존재하지 않을 때: random으로 Plee 생성
+    //        - 성장이 완료된 Plee가 존재할 때: 성장이 완료된 Plee 제외한 다른 Plee random으로 생성
+    //        - Plee 만든 마지막 상태 보내주기(아직 미션중이야, 미션 다완료해서 다 컸어)
     fun CreatePlee() {
-//        1. complete를 받으면 생성하기(string)
+        //        1. complete를 받으면 생성하기(string)
     }
 }
