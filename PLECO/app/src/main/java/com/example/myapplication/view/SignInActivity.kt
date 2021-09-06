@@ -3,18 +3,24 @@ package com.example.myapplication.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
+import com.example.myapplication.communication.LogInErrorMessage
 import com.example.myapplication.communication.MasterApplication
 import com.example.myapplication.communication.UserToken
+import com.google.gson.Gson
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Converter
 import retrofit2.Response
+import java.io.IOException
+
 
 class SignInActivity : AppCompatActivity() {
 
@@ -61,7 +67,7 @@ class SignInActivity : AppCompatActivity() {
 //                        val token = response.headers().get("Authorization").toString()  // user token
                         Log.d("UserToken", token)
                         Log.d("LoginSuccess", success.toString())
-                        Log.d("LoginResponse", info.toString())
+                        Log.d("LoginResponse", Gson().toJson(info))
                         if (success) {
                             saveUserToken(token, this@SignInActivity)
                             (application as MasterApplication).createRetrofit()
@@ -72,16 +78,20 @@ class SignInActivity : AppCompatActivity() {
                         }
                     }
                     else{
-//                        val info = response.body()
-//                        val error = info!!.errorMessage.toString()
-//                        Log.d("LogInErrorBody", info.toString())
-//                        Log.d("LogInError", error)
-//                        if  (error == "없음"){
-//                            Toast.makeText(this@SignInActivity, "존재하지 않는 이메일입니다", Toast.LENGTH_LONG).show()
-//                        }
-//                        else if (error == "틀림"){
-//                            Toast.makeText(this@SignInActivity, "비밀번호가 올바르지 않습니다", Toast.LENGTH_LONG).show()
-//                        }
+                        val converter: Converter<ResponseBody, LogInErrorMessage> =
+                            (application as MasterApplication).retrofit.responseBodyConverter(
+                                LogInErrorMessage::class.java, arrayOfNulls<Annotation>(0)
+                            )
+
+                        val error: LogInErrorMessage
+
+                        try {
+                            error = converter.convert(response.errorBody())!!
+                            Log.e("error message", error.getErrorMessage())
+                            Toast.makeText(this@SignInActivity, error.getErrorMessage(), Toast.LENGTH_LONG).show()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             })

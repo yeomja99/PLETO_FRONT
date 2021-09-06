@@ -4,12 +4,16 @@ import android.app.Application
 import android.content.Context
 import com.example.myapplication.interfaces.RetrofitService
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MasterApplication : Application() {
 
     lateinit var service: RetrofitService
+    lateinit var retrofit: Retrofit
 
     override fun onCreate() {
         super.onCreate()
@@ -35,9 +39,15 @@ class MasterApplication : Application() {
             }
         }
 
-        val retrofit = Retrofit.Builder()
+        val clientBuilder = OkHttpClient.Builder()
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        clientBuilder.addInterceptor(loggingInterceptor)
+
+        retrofit = Retrofit.Builder()
             .baseUrl("http://13.209.92.105:8080/")    // 서버 배포되면 수정
             .addConverterFactory(GsonConverterFactory.create())
+            .client(clientBuilder.build())
             .build()
 
         service = retrofit.create(RetrofitService::class.java)
