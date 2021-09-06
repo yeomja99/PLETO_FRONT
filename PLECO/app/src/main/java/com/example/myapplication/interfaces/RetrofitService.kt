@@ -23,21 +23,27 @@ interface RetrofitService {
         @Headers("content-type: application/json")
         @POST("signup") // base url 뒤에 오는 url을 적을 것
         fun register(
-            @Body userInfo: UserInfo   // nickname, password
+            @Body userInfo: UserInfo   // email, password
         ): Call<SignUpOkCheck>
 
-        // 닉네임 중복 확인 GET
         // 서버 완성되면 수정할 것
         @Headers("content-type: application/json")
-        @GET("signup")
+        @GET("duplicate")
         fun getNicknameIsExist(
             @Query("email") email: String // query는 ? 뒤에 오는 것
         ): Call<Email>
 
         // 로그인 POST
+//        @Headers("content-type: application/json")
+//        @POST("login")
+//        fun login(
+//            @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
+//        ): Call<UserToken>
+
         @Headers("content-type: application/json")
         @POST("login")
         fun login(
-            @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
+                @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
+//                @Body userInfo: UserInfo   // email, password
         ): Call<UserToken>
 }
