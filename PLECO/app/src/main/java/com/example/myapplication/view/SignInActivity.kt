@@ -6,35 +6,43 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.communication.MasterApplication
-import com.example.myapplication.communication.UserInfo
 import com.example.myapplication.communication.UserToken
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignInActivity : AppCompatActivity() {
+
+    lateinit var logInBtn: TextView
+    lateinit var goSignUpBtn: TextView
+    lateinit var email: EditText
+    lateinit var password: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        go_signup_btn.setOnClickListener {
+        initView(this@SignInActivity)
+
+        goSignUpBtn.setOnClickListener {
             startActivity(
                 Intent(this@SignInActivity, SignUpActivity::class.java)
             )
         }
 
-        login_btn.setOnClickListener {
-            val nickname = signin_nickname.text.toString()
-            val password = signin_password.text.toString()
+        logInBtn.setOnClickListener {
+            val email = getEmail()
+            val password = getPassword()
             val body = HashMap<String, String>()
-            body.put("nickname", nickname)
+            body.put("email", email)
             body.put("password", password)
 
-            if (nickname == "" || password == "") {
+            if (email.toString() == "" || password.toString() == "") {
                 Toast.makeText(this@SignInActivity, "로그인 정보를 입력해주세요", Toast.LENGTH_LONG).show()
             }
 
@@ -47,17 +55,33 @@ class SignInActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<UserToken>, response: Response<UserToken>) {   // 통신 성공
                     if (response.isSuccessful) {
-                        val user = response.body()  // email, password, token
-                        val token = user!!.token;   // token을 body에서 얻어오는 것으로 변경
+                        val info = response.body()  // token, success, pleeSize
+                        val token = info!!.token.toString();   // token을 body에서 얻어오는 것으로 변경
+                        val success = info!!.success
 //                        val token = response.headers().get("Authorization").toString()  // user token
-                        Log.d("user", token)
-                        Log.d("User", user.toString())
-                        saveUserToken(token, this@SignInActivity)
-                        (application as MasterApplication).createRetrofit()
-                        Toast.makeText(this@SignInActivity, "환영합니다!", Toast.LENGTH_LONG).show()
-                        startActivity (
-                            Intent(this@SignInActivity, MainActivity::class.java)
-                        )
+                        Log.d("UserToken", token)
+                        Log.d("LoginSuccess", success.toString())
+                        Log.d("LoginResponse", info.toString())
+                        if (success) {
+                            saveUserToken(token, this@SignInActivity)
+                            (application as MasterApplication).createRetrofit()
+                            Toast.makeText(this@SignInActivity, "환영합니다!", Toast.LENGTH_LONG).show()
+                            startActivity(
+                                Intent(this@SignInActivity, MainActivity::class.java)
+                            )
+                        }
+                    }
+                    else{
+//                        val info = response.body()
+//                        val error = info!!.errorMessage.toString()
+//                        Log.d("LogInErrorBody", info.toString())
+//                        Log.d("LogInError", error)
+//                        if  (error == "없음"){
+//                            Toast.makeText(this@SignInActivity, "존재하지 않는 이메일입니다", Toast.LENGTH_LONG).show()
+//                        }
+//                        else if (error == "틀림"){
+//                            Toast.makeText(this@SignInActivity, "비밀번호가 올바르지 않습니다", Toast.LENGTH_LONG).show()
+//                        }
                     }
                 }
             })
@@ -70,5 +94,21 @@ class SignInActivity : AppCompatActivity() {
         val editor = sp.edit()
         editor.putString("login_token", token)
         editor.commit()
+
+    }
+
+    fun initView(activity: Activity) {
+        logInBtn = activity.findViewById(R.id.login_btn)
+        goSignUpBtn = activity.findViewById(R.id.go_signup_btn)
+        email = activity.findViewById(R.id.signin_email)
+        password = activity.findViewById(R.id.signin_password)
+    }
+
+    fun getEmail(): String{
+        return email.text.toString()
+    }
+
+    fun getPassword(): String {
+        return password.text.toString()
     }
 }

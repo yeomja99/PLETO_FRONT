@@ -12,18 +12,17 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.communication.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
 
-    lateinit var nicknameView: EditText
+    lateinit var EmailView: EditText
     lateinit var password1View: EditText
     lateinit var password2View: EditText
     lateinit var registerBtn: TextView
-    lateinit var nicknameOkBtn: Button
+    lateinit var EmailOkBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +31,18 @@ class SignUpActivity : AppCompatActivity() {
         initView(this@SignUpActivity)
 
         // 닉네임 중복 확인 버튼
-        nicknameOkBtn.setOnClickListener {
+        EmailOkBtn.setOnClickListener {
             nicknameCheck(this)
         }
 
         // 가입하기 버튼
-        signup_btn.setOnClickListener {
+        registerBtn.setOnClickListener {
             register(this)
         }
     }
 
     fun register(activity: Activity) {
-        val nickname = getNickName()
+        val nickname = getEmail()
         val password1 = getPassword1()
         val password2 = getPassword2()
         val user = UserInfo(nickname, password1)
@@ -79,7 +78,7 @@ class SignUpActivity : AppCompatActivity() {
 
     // 닉네임 중복 확인 함수
     fun nicknameCheck(activity: Activity) {
-        val nickname = getNickName()
+        val nickname = getEmail()
 
         if (nickname == "") {
             Toast.makeText(activity, "닉네임을 입력해주세요", Toast.LENGTH_LONG).show()
@@ -91,15 +90,16 @@ class SignUpActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(call: Call<Email>, response: Response<Email>) { // 통신 성공
-                        if (response.isSuccessful) {
+                        if (response.isSuccessful) {    // HttpStatus가 200번대일 경우
                             val result = response.body()
                             val success = result!!.success!!
                             // 닉네임 중복
-                            if (!success) {
-                                Toast.makeText(activity, "사용 불가능한 닉네임입니다", Toast.LENGTH_LONG).show()
-                            } else {
+                            if (success) {
                                 Toast.makeText(activity, "사용 가능한 닉네임입니다", Toast.LENGTH_LONG).show()
                             }
+                        }
+                        else {
+                            Toast.makeText(activity, "사용 불가능한 닉네임입니다", Toast.LENGTH_LONG).show()
                         }
                     }
                 })
@@ -116,15 +116,15 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun initView(activity: Activity) {
-        nicknameView = activity.findViewById(R.id.nickname_inputbox)
+        EmailView = activity.findViewById(R.id.nickname_inputbox)
         password1View = activity.findViewById(R.id.password1_inputbox)
         password2View = activity.findViewById(R.id.password2_inputbox)
         registerBtn = activity.findViewById(R.id.signup_btn)
-        nicknameOkBtn = activity.findViewById(R.id.nickname_ok_btn)
+        EmailOkBtn = activity.findViewById(R.id.nickname_ok_btn)
     }
 
-    fun getNickName(): String{
-        return nicknameView.text.toString()
+    fun getEmail(): String{
+        return EmailView.text.toString()
     }
 
     fun getPassword1(): String {

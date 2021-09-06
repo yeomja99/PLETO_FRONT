@@ -25,7 +25,7 @@ class MasterApplication : Application() {
             if (checkIsLogin()) {
                 getUserToken()?.let { token ->  // null이 아닌 경우 let 블럭 실행
                     val request = original.newBuilder() // 원래 나가려던 통신을 잡아서 original에 헤더를 붙임
-                        .header("Authorization", "$token")
+                        .header("X-AUTH-TOKEN", "$token")
                         // name : 서버가 설정한거 보고 다시 작성, value : 서버가 토큰 설정한거 보고 작성
                         .build()
                     it.proceed(request) // 헤더 붙이고 내보냄
