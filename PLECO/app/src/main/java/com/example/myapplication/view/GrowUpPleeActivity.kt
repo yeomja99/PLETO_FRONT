@@ -3,6 +3,8 @@ package com.example.myapplication.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.myapplication.R
@@ -10,7 +12,6 @@ import com.example.myapplication.communication.Email
 import com.example.myapplication.communication.MasterApplication
 import com.example.myapplication.communication.SignUpOkCheck
 import com.example.myapplication.utils.GrowPleeData
-import com.example.myapplication.utils.GrowUpPleeRetrofitService
 import com.example.myapplication.utils.PleeDictData
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
 import retrofit2.Call
@@ -36,7 +37,9 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
         var existedPleeList : PleeDictData = GetPleeList()
         // 유저가 생성한 Plee가 없다면
-        if (existedPleeList.pleeList!!.size == 0){
+        if (PleeListSize== 0){
+            var tutorialImageview : ImageView = findViewById(R.id.view_plee)
+            tutorialImageview.setImageResource(R.drawable.example_ducky)
             // 튜토리얼 플리 생성
             // 플리 저장 리스트 가져오고
             // 가져온 플리 중에 T(tutorial)로 분류된 플리 이름, 사진 불러오기
@@ -194,6 +197,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     t: Throwable
                 ) {    // 통신 실패
                     Toast.makeText(this@GrowUpPleeActivity, "서버 통신 오류", Toast.LENGTH_LONG).show()
+                    Log.d("통신 오류","fail")
                 }
 
                 override fun onResponse(
