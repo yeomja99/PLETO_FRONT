@@ -15,3 +15,9 @@ class PleeStateData(
 class PleeDictData(
     var pleeList: Array<String>? = null
 ) : Serializable
+
+class SendPleeStatus(
+    var email: String? = null,
+    var ecoName: String? = null,
+    var pleeName: String? = null
+) : Serializable
