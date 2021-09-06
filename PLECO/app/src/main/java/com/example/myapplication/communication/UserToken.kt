@@ -3,8 +3,8 @@ package com.example.myapplication.communication
 import java.io.Serializable
 
 class UserToken (
-    var token: String = "",
+    var token: String? = null,
     var success: Boolean = false,
-    var pleeSize: Long = 0,
-    var errorMessage: String? = null
+    var pleeSize: Long? = null,
+    var message: String? = null
 ): Serializable
