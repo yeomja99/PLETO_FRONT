@@ -21,3 +21,7 @@ class SendPleeStatus(
     var ecoName: String? = null,
     var pleeName: String? = null
 ) : Serializable
+
+class PleeStatus(
+    var pleeStatus: String? = null
+) : Serializable
