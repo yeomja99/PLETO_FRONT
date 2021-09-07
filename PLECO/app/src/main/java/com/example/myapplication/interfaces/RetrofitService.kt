@@ -24,14 +24,14 @@ interface RetrofitService {
     @Headers("content-type: application/json")
     @POST("signup") // base url 뒤에 오는 url을 적을 것
     fun register(
-            @Body userInfo: UserInfo   // email, password
+        @Body userInfo: UserInfo   // email, password
     ): Call<SignUpOkCheck>
 
     // 서버 완성되면 수정할 것
     @Headers("content-type: application/json")
     @GET("duplicate")
     fun getNicknameIsExist(
-            @Query("email") email: String // query는 ? 뒤에 오는 것
+        @Query("email") email: String // query는 ? 뒤에 오는 것
     ): Call<Email>
 
     // 로그인 POST
@@ -44,37 +44,42 @@ interface RetrofitService {
     @Headers("content-type: application/json")
     @POST("login")
     fun login(
-            @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
+        @Body params: HashMap<String, String>       // 회원가입처럼 userInfo 로 보내도 상관없음
 //                @Body userInfo: UserInfo   // email, password
     ): Call<UserToken>
 
     // GrowUpPlee 관련 함수
     //유저가 현재 키우고 있는 플리와 eco 수행 횟수 가져오기
-    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @Headers("content-type: application/json",
+        "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5amgiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjMxMDI2ODgzLCJleHAiOjE2MzEwMzA0ODN9.azT8DQHKtXVIIUihizKDagx97qNRiACaPH5Lf2XEPNo")
     @GET("user/growPlee")
     fun GetGrowPlee(
-            @Query("email") email: String
+        @Query("email") email: String
     ): Call<GrowPleeData>
 
     //생성한 플리 보내기
-    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @Headers("content-type: application/json",
+        "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5amgiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjMxMDI2ODgzLCJleHAiOjE2MzEwMzA0ODN9.azT8DQHKtXVIIUihizKDagx97qNRiACaPH5Lf2XEPNo")
     @POST("user/growPlee")
     fun PostNowPlee(
-            @Body pleeStateData: PleeStateData
-    ): Call<Long>
+        @Query("email") email: String,
+        @Body pleeStateData: PleeStateData
+    ): Call<PleeId>
 
     //있는 플리 리스트 가져오기
-    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @Headers("content-type: application/json",
+        "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5amgiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjMxMDI2ODgzLCJleHAiOjE2MzEwMzA0ODN9.azT8DQHKtXVIIUihizKDagx97qNRiACaPH5Lf2XEPNo")
     @GET("user/pleeDict")
     fun GetPleelist(
-            @Query("email") email: String
+        @Query("email") email: String
     ): Call<PleeDictData>
 
     // 현재 상태 가져오기
-    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @Headers("content-type: application/json",
+        "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5amgiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjMxMDI2ODgzLCJleHAiOjE2MzEwMzA0ODN9.azT8DQHKtXVIIUihizKDagx97qNRiACaPH5Lf2XEPNo")
     @POST("user/performEco")
     fun CheckStatus(
-            @Body sendPleeStatus: SendPleeStatus
+        @Body sendPleeStatus: SendPleeStatus
     ): Call<PleeStatus>
 
 }
