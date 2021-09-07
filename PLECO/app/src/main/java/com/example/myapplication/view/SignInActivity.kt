@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.communication.LogInErrorMessage
 import com.example.myapplication.communication.MasterApplication
+import com.example.myapplication.communication.Token
 import com.example.myapplication.communication.UserToken
 import com.google.gson.Gson
 import okhttp3.ResponseBody
@@ -70,6 +71,12 @@ class SignInActivity : AppCompatActivity() {
                         Log.d("LoginResponse", Gson().toJson(info))
                         if (success) {
                             saveUserToken(token, this@SignInActivity)
+                            val sp = getSharedPreferences("login_token", Context.MODE_PRIVATE) // sp에서 값을 가져옴
+                            val savedToken = sp.getString("login_token", "null")
+                            if (savedToken != null) {
+                                Token.token = savedToken
+                            }
+                            Log.d("SavedUserToken", savedToken)
                             (application as MasterApplication).createRetrofit()
                             Toast.makeText(this@SignInActivity, "환영합니다!", Toast.LENGTH_LONG).show()
                             startActivity(

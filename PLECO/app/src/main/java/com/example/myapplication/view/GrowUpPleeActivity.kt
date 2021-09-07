@@ -1,5 +1,6 @@
 package com.example.myapplication.view
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.R
-import com.example.myapplication.communication.Email
-import com.example.myapplication.communication.LogInErrorMessage
-import com.example.myapplication.communication.MasterApplication
-import com.example.myapplication.communication.SignUpOkCheck
+import com.example.myapplication.communication.*
 import com.example.myapplication.utils.*
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
 import okhttp3.ResponseBody
@@ -40,15 +38,20 @@ class GrowUpPleeActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
         setContentView(R.layout.activity_grow_up_plee)
+
+        val sp = getSharedPreferences("login_token", Context.MODE_PRIVATE)
+        val token = sp.getString("login_token", "null")
+        Log.d("SavedUserTokenInGrowUp", token)
+
         var ex_plee = SendPleeStatus()
         growingplee.ecoCount = 1
         growingplee.pleeName = "test"
         ex_plee.ecoName = "텀블러"
-        ex_plee.email = "test0906"
+        ex_plee.email = "test0907"
         ex_plee.pleeName = "cute"
         status = checkPleeStatus(ex_plee) //complet/growing 상태 저장
-        existedPleeList = GetPleeList("test0906")
-        growingplee = GetGrowingPleeData("test0906")
+        existedPleeList = GetPleeList("test0907")
+        growingplee = GetGrowingPleeData("test0907")
         status.pleeStatus = "COMPLETE"
 
         if (status.pleeStatus == "COMPLETE") {
@@ -245,7 +248,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
     //    1-2) 현재 Plee data get() 함수
     private fun GetGrowingPleeData(email: String): GrowPleeData {
         var growingPlee = GrowPleeData()
-        (application as MasterApplication).service.GetGrowPlee(email)
+        (application as MasterApplication).service.GetGrowPlee(Token.token, email)
             .enqueue(object :
                 Callback<GrowPleeData> {  // ! Callback 은 반드시 retrofit 의 Callback 을 사용할 것 !
                 override fun onFailure(
@@ -260,7 +263,9 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     response: Response<GrowPleeData>
                 ) {   // 통신 성공
                     val result = response.body()
-                    Log.d("response code!!!", " " + response.message())
+                    Log.d("response token", Token.token)
+                    Log.d("response code!!!", " " + response.code())
+                    Log.d("response body", response.body().toString())
                     if (response.isSuccessful) {
                         val result = response.body()
                         growingPlee.ecoCount = result?.ecoCount
@@ -319,7 +324,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
     // 생성한 플리 전달 서버에 post
     private fun PostPlee(pleestatedata: PleeStateData) {
-        (application as MasterApplication).service.PostNowPlee(pleestatedata)
+        (application as MasterApplication).service.PostNowPlee("test0907", pleestatedata)
             .enqueue(object :
                 Callback<Long> {  // ! Callback 은 반드시 retrofit 의 Callback 을 사용할 것 !
                 override fun onFailure(
