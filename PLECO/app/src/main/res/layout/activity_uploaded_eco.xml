@@ -58,11 +58,11 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="100dp"
-                app:srcCompat="@drawable/ic_btn_rename"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/tv_eco_name"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_btn_rename" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,8 +73,8 @@
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -84,8 +84,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
 
         <ImageView
             android:id="@+id/Camera2_Camera"
@@ -93,17 +92,16 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="#CEE8CB"
+            app:srcCompat="@drawable/ic_btn_eco_cam_on" />
 
         <ImageView
             android:id="@+id/Camera2_Growup"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="59dp"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_grow_off" />
 
         <ImageView
             android:id="@+id/Camera2_Userinfo"
@@ -111,10 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_plee_book_off" />
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

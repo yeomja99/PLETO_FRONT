@@ -51,17 +51,15 @@ class UploadedEcoActivity : AppCompatActivity() {
 
 
 //       // Rename Food Photo
-//        btn_rename.setOnClickListener{
-//            labelidx ++
-//            if (labelidx < labelList.size)
-//                tv_food_name.text = labelList[labelidx]
-//            else
-//                labelidx = 0
-//                tv_food_name.text = labelList[labelidx]
-//            intentToRecommend.putExtra("food_name",labelList[labelidx])
-//        }
-//
-//       intentToRecommend.putExtra("food_name",labelList[labelidx])
+        btn_rename.setOnClickListener{
+            labelidx ++
+            if (labelidx < labelList.size)
+                tv_eco_name.text = labelList[labelidx]
+            else
+                labelidx = 0
+                tv_eco_name.text = labelList[labelidx]
+        }
+
 
        // Save Image
        // Use Shared Preferences : string array
