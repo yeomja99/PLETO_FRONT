@@ -2,6 +2,7 @@ package com.example.myapplication.communication
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import com.example.myapplication.interfaces.RetrofitService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -58,6 +59,7 @@ class MasterApplication : Application() {
     fun checkIsLogin(): Boolean {
         val sp = getSharedPreferences("login_token", Context.MODE_PRIVATE) // sp에서 값을 가져옴
         val token = sp.getString("login_token", "null")
+        Log.d("token: ", " "+token)
         return token != "null"  // 토큰이 null이 아니면 true, null이면 false 반환
     }
 

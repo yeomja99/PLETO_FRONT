@@ -4,10 +4,7 @@ import com.example.myapplication.communication.Email
 import com.example.myapplication.communication.SignUpOkCheck
 import com.example.myapplication.communication.UserInfo
 import com.example.myapplication.communication.UserToken
-import com.example.myapplication.utils.GrowPleeData
-import com.example.myapplication.utils.PleeDictData
-import com.example.myapplication.utils.PleeStateData
-import com.example.myapplication.utils.SendPleeStatus
+import com.example.myapplication.utils.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -53,31 +50,31 @@ interface RetrofitService {
 
     // GrowUpPlee 관련 함수
     //유저가 현재 키우고 있는 플리와 eco 수행 횟수 가져오기
-    @Headers("content-type: application/json")
-    @GET("User/growPlee")
+    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @GET("user/growPlee")
     fun GetGrowPlee(
-            @Query("email") growPleeData: GrowPleeData
+            @Query("email") email: String
     ): Call<GrowPleeData>
 
     //생성한 플리 보내기
-    @Headers("content-type: application/json")
-    @POST("/user/growPlee")
+    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @POST("user/growPlee")
     fun PostNowPlee(
             @Body pleeStateData: PleeStateData
     ): Call<Long>
 
     //있는 플리 리스트 가져오기
-    @Headers("content-type: application/json")
-    @GET("/user/pleeDict")
+    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @GET("user/pleeDict")
     fun GetPleelist(
-            @Query("email") pleeDictData: PleeDictData
+            @Query("email") email: String
     ): Call<PleeDictData>
 
     // 현재 상태 가져오기
-    @Headers("content-type: application/json")
-    @POST("/user/performEco")
+    @Headers("content-type: application/json", "X-AUTH-TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MDkwNiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MzA5OTEzMDAsImV4cCI6MTYzMDk5NDkwMH0.rR8yizDa1sne_DyO52z22rmBkr6NAm69-HyVflw6EMw")
+    @POST("user/performEco")
     fun CheckStatus(
             @Body sendPleeStatus: SendPleeStatus
-    ): Call<String>
+    ): Call<PleeStatus>
 
 }
