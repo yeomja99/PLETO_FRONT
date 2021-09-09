@@ -22,10 +22,10 @@ class PleeDictData(
 
 class SendPleeStatus(
     var email: String? = null,
-    var ecoName: String? = null,
-    var pleeName: String? = null
+    var ecoName: String? = null
 ) : Serializable
 
 class PleeStatus(
+    var pleeName: String? = null,
     var pleeStatus: String? = null
 ) : Serializable
