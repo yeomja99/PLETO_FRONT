@@ -23,7 +23,7 @@ import java.util.*
 val tutorialnum: Long = 1// 튜토리얼 미션 횟수 저장 변수
 val missionnum1: Long = 2// 1단계 미션 횟수 저장 변수
 val missionnum2: Long = 5// 2단계 미션 횟수 저장 변수
-var isexsited: Boolean = false// 유저가 플리가 있는지 없는지 확인하는 함수
+var isexsited: Boolean = false// 유저가 플리가 있는지 없는지 확인하는 변수
 
 
 class GrowUpPleeActivity : AppCompatActivity() {
@@ -43,16 +43,26 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
         var ex_plee = SendPleeStatus() // Plee 상태 보내면 Complete/Growing plee status 받음
 
+
         // 초기화 하지 않으면 에러나서 추가한 코드
 //        PostPlee(PleeStateData("one",1))
 
 //        Log.d("isexsited", "" + isexsited)
 //        existedPleeList = GetPleeList(ex_email) // 유저에게 존재하는 플리 리스트 Get
-        growingplee = GetGrowingPleeData(ex_email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+//        growingplee = GetGrowingPleeData(ex_email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+//
+        var postdata = PleeStateData()
+        postdata.pleeName = "nnplee9"
+        postdata.completeCount = 1 // 추후 수정
+        PostPlee(postdata)
 
-        ex_plee.ecoName = "tumbler"       // 에코 미션
+
+        ex_plee.ecoName = "ecoBag"       // 에코 미션
         ex_plee.email = ex_email      // 예시 이메일 정보
         status = checkPleeStatus(ex_plee) //complete/growing 상태 저장
+        Log.d("status", status.pleeStatus)
+
+        growingplee = GetGrowingPleeData(ex_email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
 
 //        Log.d("status", "status: " + status.pleeStatus)
 //        Log.d("GrowingPlee", "pleename: " + growingplee.ecoCount)
@@ -360,8 +370,8 @@ class GrowUpPleeActivity : AppCompatActivity() {
             })
     }
 
-    // POST ChcekStatus
-    // SendPleeStatus(email, econame, pleename) 보내면 status(CMPLETE인지 GROWING인지) 받는 함수
+    // POST ChcekStatus == performEco, 미션 수행하는 함수
+    // SendPleeStatus(email, econame, pleename) 보내면 status(COMPLETE인지 GROWING인지) 받는 함수
     // isexsited: Boolean - 플리 유무를 확인하기 위해 플리가 있을 경우 True, 없을 경우 False
     private fun checkPleeStatus(sendpleestatus: SendPleeStatus): PleeStatus {
         var status = PleeStatus()
