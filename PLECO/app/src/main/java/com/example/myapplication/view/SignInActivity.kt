@@ -79,6 +79,8 @@ class SignInActivity : AppCompatActivity() {
                             Log.d("SavedUserToken", savedToken)
                             (application as MasterApplication).createRetrofit()
                             Toast.makeText(this@SignInActivity, "환영합니다!", Toast.LENGTH_LONG).show()
+                            saveUserEmail(email, this@SignInActivity)
+                            Log.d("SavedUserEmail", email)
                             startActivity(
                                 Intent(this@SignInActivity, MainActivity::class.java)
                             )
@@ -111,7 +113,13 @@ class SignInActivity : AppCompatActivity() {
         val editor = sp.edit()
         editor.putString("login_token", token)
         editor.commit()
+    }
 
+    fun saveUserEmail(email: String, activity: Activity) {
+        val sp = activity.getSharedPreferences("user_email", Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString("user_email", email)
+        editor.commit()
     }
 
     fun initView(activity: Activity) {

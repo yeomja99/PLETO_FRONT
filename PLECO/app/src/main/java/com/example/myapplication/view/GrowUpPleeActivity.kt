@@ -47,7 +47,10 @@ class GrowUpPleeActivity : AppCompatActivity() {
         growingplee.ecoCount = 1
         growingplee.pleeName = "test"
         ex_plee.ecoName = "텀블러"
-        ex_plee.email = "test0907"
+//        ex_plee.email = "test0907"
+        val sp_email = getSharedPreferences("user_email", Context.MODE_PRIVATE) // sp에서 값을 가져옴
+        ex_plee.email = sp_email.getString("user_email", "null")
+        Log.d("UserEmail", ex_plee.email)
         ex_plee.pleeName = "cute"
         status = checkPleeStatus(ex_plee) //complet/growing 상태 저장
         existedPleeList = GetPleeList("test0907")
