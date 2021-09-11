@@ -51,7 +51,7 @@ interface RetrofitService {
 
     //생성한 플리 보내기
     @Headers("content-type: application/json")
-    @POST("user/growPlee")
+    @POST("/user/growPlee")
     fun PostNowPlee(
         @Header("X-AUTH-TOKEN") token: String,
         @Query("email") email: String,
