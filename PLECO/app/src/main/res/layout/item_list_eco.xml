@@ -36,6 +36,6 @@
         android:gravity="center"
         android:textSize="20dp"
         android:textColor="@color/colorDarkGray"
-        android:text="음식이름"
+        android:text="미션이름"
         ></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

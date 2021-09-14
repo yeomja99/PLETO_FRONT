@@ -129,7 +129,7 @@ class UploadedEcoActivity : AppCompatActivity() {
        Camera2_Camera.setOnClickListener {
            var camera22camera_intent: Intent = Intent(this, UploadEcoActivity::class.java)
            startActivity(camera22camera_intent)
-           finish()
+           this@UploadedEcoActivity.finish()
 
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
@@ -137,7 +137,7 @@ class UploadedEcoActivity : AppCompatActivity() {
        Camera2_Growup.setOnClickListener {
            var camera22growup_intent: Intent = Intent(this, GrowUpPleeActivity::class.java)
            startActivity(camera22growup_intent)
-           finish()
+           this@UploadedEcoActivity.finish()
 
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
@@ -145,7 +145,7 @@ class UploadedEcoActivity : AppCompatActivity() {
        Camera2_Userinfo.setOnClickListener {
            var camera22userinfo_intent: Intent = Intent(this, UserInfoActivity::class.java)
            startActivity(camera22userinfo_intent)
-           finish()
+           this@UploadedEcoActivity.finish()
 
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
