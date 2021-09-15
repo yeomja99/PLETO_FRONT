@@ -49,7 +49,7 @@ class ViewEcoActivity : AppCompatActivity() {
         viewManager = GridLayoutManager(this, 2)
         viewAdapter = ViewEcoAdapter(photoData)
 
-        recyclerView = findViewById<RecyclerView>(R.id.rv_food).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.rv_mission).apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
@@ -65,13 +65,6 @@ class ViewEcoActivity : AppCompatActivity() {
         var intentToUploadAct = Intent(this, UploadEcoActivity::class.java)
         var intentToRecommendFoodActivity = Intent(this, UploadedEcoActivity::class.java)
 
-        btn_add.setOnClickListener{
-            startActivity(intentToUploadAct)
-            SavePhotoData(photoData)
-            finish()
-
-            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-        }
 
         EcoGallery.setOnClickListener {
             var ecogallery_intent: Intent = Intent(this, ViewEcoActivity::class.java)

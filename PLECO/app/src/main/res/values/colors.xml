@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorWhite">#fdfdfd</color>
-    <color name="colorBackGround">#f0ece3</color>
-    <color name="colorItem">#dfd3c3</color>
-    <color name="colorDarkBeige">#c7b198</color>
+    <color name="colorBackGround">#D4ECD2</color>
+    <color name="colorBtnBackGround">#FFCEE8CB</color>
+    <color name="colorItem">#F9F8D9</color>
+    <color name="colorDarkGreen">#8FBF83</color>
     <color name="colorDarkGray">#707070</color>
     <color name="colorBlack">#1a1a1a</color>
 </resources>

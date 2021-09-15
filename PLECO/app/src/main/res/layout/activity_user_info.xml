@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     tools:context=".view.UserInfoActivity">
 
     <TextView
@@ -27,8 +28,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
+
 
         <ImageView
             android:id="@+id/Userinfo_Camera"
@@ -36,8 +37,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_cam_off" />
 
         <ImageView
             android:id="@+id/Userinfo_Growup"
@@ -45,17 +45,17 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_grow_off" />
 
         <ImageView
             android:id="@+id/Userinfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="@color/colorBtnBackGround"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_plee_book_on" />
+
     </LinearLayout>
 
 

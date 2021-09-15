@@ -64,7 +64,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
         Log.d("UserEmail", email)
         val ecobag = "tumbler"
 
-
         // 코루틴 참고 사이트 : http://www.gisdeveloper.co.kr/?p=10279
         GlobalScope.launch(Dispatchers.Main) {
             async(Dispatchers.IO) {
@@ -176,7 +175,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                 val new_pleelist = allPleeList
 
-                for (i in 0..existedPleeList.size - 1) {
+                for (i in 0..allPleeList.size - existedPleeList.size - 1) {
                     val name: String = existedPleeList[i].pleeName!!
                     new_pleelist.remove(name)
                 }

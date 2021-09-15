@@ -9,8 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="upload"/>
+        android:layout_height="match_parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="350dp"
@@ -55,7 +54,7 @@
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
             android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
 
         <ImageView
             android:id="@+id/Camera_Camera"
@@ -63,8 +62,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="@color/colorBtnBackGround"
+            app:srcCompat="@drawable/ic_btn_eco_cam_on" />
 
         <ImageView
             android:id="@+id/Camera_Growup"
@@ -72,8 +71,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_grow_off" />
 
         <ImageView
             android:id="@+id/Camera_Userinfo"
@@ -81,8 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_plee_book_off" />
     </LinearLayout>
 
 
