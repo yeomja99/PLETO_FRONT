@@ -63,19 +63,29 @@ class GrowUpPleeActivity : AppCompatActivity() {
         val sp_email = getSharedPreferences("user_email", Context.MODE_PRIVATE) // sp에서 값을 가져옴
         var email = sp_email.getString("user_email", "null")!!
         Log.d("UserEmail", email)
+        var econameIntent: Intent = getIntent()
+
+        Log.d("econame", "hasExtra" + (econameIntent.hasExtra("eco_label")))
+        if (econameIntent.hasExtra("eco_label")) {
+            var kr_econame: String = econameIntent.getStringExtra("eco_label")
+            Log.d("econame", "" + kr_econame)
+            if (kr_econame == "에코백") ecoName = "ecoBag"
+            else if (kr_econame == "텀블러") ecoName = "tumbler"
+        } else Log.d("안됨", "")
 
         // 코루틴 참고 사이트 : http://www.gisdeveloper.co.kr/?p=10279
         GlobalScope.launch(Dispatchers.Main) {
             async(Dispatchers.IO) {
-                if (intent.hasExtra("eco_label")) {
-                    var kr_econame: String = intent.getStringExtra("eco_label")
-                    Log.d("econame", "" + kr_econame)
-                    if (kr_econame == "에코백") ecoName = "ecoBag"
-                    else if (kr_econame == "텀블러") ecoName = "tumbler"
+                if (ecoName == null){
+                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+                    GetPleeList(email)// COMPLETE 플리 리스트 Get
+                } else{
                     status = checkPleeStatus(SendPleeStatus(email, ecoName))
-                } else Log.d("안됨", "")
-                GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
-                GetPleeList(email)// COMPLETE 플리 리스트 Get
+                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+                    GetPleeList(email)// COMPLETE 플리 리스트 Get
+                }
+
+
             }.await()
             async(Dispatchers.Main) {
                 delay(500)
@@ -434,25 +444,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
                         status = result!!
                         Log.d("checkPleeStatus", "" + status.pleeStatus)
                         Log.d("checkPleeStatus", "" + status.pleeName)
-                    } else {
-                        val converter: Converter<ResponseBody, LogInErrorMessage> =
-                            (application as MasterApplication).retrofit.responseBodyConverter(
-                                LogInErrorMessage::class.java, arrayOfNulls<Annotation>(0)
-                            )
-
-                        val error: LogInErrorMessage
-
-                        try {
-                            error = converter.convert(response.errorBody())!!
-                            Log.e("error message", error.getErrorMessage())
-                            Toast.makeText(
-                                this@GrowUpPleeActivity,
-                                error.getErrorMessage(),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
                     }
                 }
             })
