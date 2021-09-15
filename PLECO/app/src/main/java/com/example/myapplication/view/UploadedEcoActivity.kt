@@ -47,11 +47,11 @@ class UploadedEcoActivity : AppCompatActivity() {
 
         // Intent uploaded food activity
         var intentToUpload = Intent(this, UploadEcoActivity::class.java)
-        var intentToView = Intent(this, ViewEcoActivity::class.java)
+        var intentToGrowUpPleeActivity = Intent(this, GrowUpPleeActivity::class.java)
 
 
 //       // Rename Food Photo
-        btn_rename.setOnClickListener{
+        tv_eco_name.setOnClickListener{
             labelidx ++
             if (labelidx < labelList.size)
                 tv_eco_name.text = labelList[labelidx]
@@ -95,7 +95,15 @@ class UploadedEcoActivity : AppCompatActivity() {
 //           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 //       }
 
-       Camera2_EcoGallery.setOnClickListener {
+       btn_retake_photo.setOnClickListener{
+           var camera22camera_intent: Intent = Intent(this, UploadEcoActivity::class.java)
+           startActivity(camera22camera_intent)
+           this@UploadedEcoActivity.finish()
+
+           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
+       }
+
+       btn_save.setOnClickListener {
 
            // Saves image URI as string to Default Shared Preferences
            var photos = ReadPhotosData()!!
@@ -114,7 +122,13 @@ class UploadedEcoActivity : AppCompatActivity() {
                // 이미지가 sp에 없을 경우 저장
                photos.add(Photo(imageUri, labelList[labelidx]))
                SavePhotoData(photos)
-               startActivity(intentToView)
+
+               // label을 판독
+
+
+               // label이 에코백 or 텀블러라고 판정날 경우 GrowUp으로 전송
+               intentToGrowUpPleeActivity.putExtra("eco_label", labelList[labelidx])
+               startActivity(intentToGrowUpPleeActivity)
            }
            else {
                Toast.makeText(this, "이미 존재하는 사진입니다.", Toast.LENGTH_LONG).show()
@@ -126,6 +140,16 @@ class UploadedEcoActivity : AppCompatActivity() {
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
        }
+
+       Camera2_EcoGallery.setOnClickListener {
+           var camera22gallery_intent: Intent = Intent(this, ViewEcoActivity::class.java)
+           startActivity(camera22gallery_intent)
+           this@UploadedEcoActivity.finish()
+
+           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
+
+       }
+
        Camera2_Camera.setOnClickListener {
            var camera22camera_intent: Intent = Intent(this, UploadEcoActivity::class.java)
            startActivity(camera22camera_intent)
