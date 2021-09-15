@@ -45,7 +45,7 @@ class ViewEcoAdapter(private var ecoList: ArrayList<Photo>) :
 
     // 위의 onCreateViewHolder에서 만든 view와 실제 입력되는 각각의 데이터를 연결
     override fun onBindViewHolder(holder: MyPageViewHolder, position: Int) {
-        holder?.bind(ecoList[position]!!)
+        holder?.bind(ecoList[position])
         Log.d("리사이클러뷰 불러짐", "성공")
 //
 //        holder?.itemView.setOnClickListener{
