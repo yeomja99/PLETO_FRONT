@@ -64,7 +64,7 @@ interface RetrofitService {
     fun GetPleelist(
         @Header("X-AUTH-TOKEN") token: String,
         @Query("email") email: String
-    ): Call<PleeDictData>
+    ): Call<MutableList<PleeName>>
 
     // 현재 상태 가져오기
     @Headers("content-type: application/json")
