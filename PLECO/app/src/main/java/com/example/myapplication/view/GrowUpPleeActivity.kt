@@ -50,7 +50,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
     private var status = PleeStatus() // complete/growing 저장
     private var pleeName = PleeName("pleename")
     private var existedPleeList = mutableListOf(pleeName) // COMPLETE 플리 리스트 Get
-
+    private var ecoName = String() // ecolabel 저장
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +59,21 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_grow_up_plee)
 
+
         val sp_email = getSharedPreferences("user_email", Context.MODE_PRIVATE) // sp에서 값을 가져옴
         var email = sp_email.getString("user_email", "null")!!
         Log.d("UserEmail", email)
-        val ecobag = "tumbler"
 
         // 코루틴 참고 사이트 : http://www.gisdeveloper.co.kr/?p=10279
         GlobalScope.launch(Dispatchers.Main) {
             async(Dispatchers.IO) {
-                status = checkPleeStatus(SendPleeStatus(email, ecobag))
+                if (intent.hasExtra("eco_label")) {
+                    var kr_econame: String = intent.getStringExtra("eco_label")
+                    Log.d("econame", "" + kr_econame)
+                    if (kr_econame == "에코백") ecoName = "ecoBag"
+                    else if (kr_econame == "텀블러") ecoName = "tumbler"
+                    status = checkPleeStatus(SendPleeStatus(email, ecoName))
+                } else Log.d("안됨", "")
                 GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
                 GetPleeList(email)// COMPLETE 플리 리스트 Get
             }.await()
@@ -161,8 +167,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 progressbar.setProgress(0)
 
                 PostPlee(postdata, email)
-            }
-            else { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
+            } else { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
                 Toast.makeText(this@GrowUpPleeActivity, "새로운 플리를 만나볼까요?", Toast.LENGTH_LONG)
                     .show()
                 val pleeImageView: ImageView = findViewById(R.id.view_plee)
@@ -202,8 +207,8 @@ class GrowUpPleeActivity : AppCompatActivity() {
             }
 
         } else { // 자라는 플리가 있을 때
-            if (user_growingPlee.pleeName == "ms_sun"){
-                if (user_growingPlee.ecoCount == 0.toLong()){
+            if (user_growingPlee.pleeName == "ms_sun") {
+                if (user_growingPlee.ecoCount == 0.toLong()) {
                     Log.d("state", "tutorialplee: growing")
                     val tutorialImageView: ImageView = findViewById(R.id.view_plee)
                     val tutorialTextView: TextView = findViewById(R.id.view_pleename)
@@ -231,7 +236,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 GrowPleeTextView.setText(user_growingPlee.pleeName)
 
                 var progressbar: ProgressBar = state_bar
-                var GrowingRate = ((user_growingPlee.ecoCount!!) * 100)/ missionnum1
+                var GrowingRate = ((user_growingPlee.ecoCount!!) * 100) / missionnum1
                 progressbar.setProgress(GrowingRate.toInt())
                 Log.d("state", "1단계 수행중(0-->1): " + GrowingRate)
 
@@ -262,7 +267,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 GrowPleeTextView.setText(user_growingPlee.pleeName)
 
                 var progressbar: ProgressBar = state_bar
-                var GrowingRate = ((user_growingPlee.ecoCount!! - missionnum1) * 100)/ missionnum2
+                var GrowingRate = ((user_growingPlee.ecoCount!! - missionnum1) * 100) / missionnum2
                 Log.d("GrowingRate", ": " + GrowingRate)
                 Log.d("state", "1단계 완료시 2단계 플리 생성: " + GrowingRate)
 
@@ -282,7 +287,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
     // 현재 플리 이름과 미션 진행한 횟수 Get 함수
@@ -309,14 +313,14 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         isexsited = "true"
-                        Log.d("GetGrowingPleeData","true == "+isexsited)
+                        Log.d("GetGrowingPleeData", "true == " + isexsited)
                         user_growingPlee.ecoCount = result?.ecoCount
                         user_growingPlee.pleeName = result?.pleeName
                         Log.d("GetGrowingPleeData", "ecoCount: " + user_growingPlee.ecoCount)
                         Log.d("GetGrowingPleeData", "ecoCount: " + user_growingPlee.pleeName)
                     } else {
                         isexsited = "false"
-                        Log.d("GetGrowingPleeData","false == "+isexsited)
+                        Log.d("GetGrowingPleeData", "false == " + isexsited)
 
                         val converter: Converter<ResponseBody, LogInErrorMessage> =
                             (application as MasterApplication).retrofit.responseBodyConverter(
@@ -364,7 +368,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         existedPleeList = response.body()!!
                         Log.d("GetPleeList", "통신 성공")
-                        for (i in 0..response.body()!!.size-1){
+                        for (i in 0..response.body()!!.size - 1) {
                             existedPleeList[i].pleeName = response.body()!![i].pleeName
                         }
                     }
@@ -372,6 +376,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
             })
         return existedPleeList
     }
+
     // POST 새로운 plee 정보 서버에 전달하기
     // PleeStateData(pleeName, completeCount) 보내기
     fun PostPlee(pleestatedata: PleeStateData, email: String) {
