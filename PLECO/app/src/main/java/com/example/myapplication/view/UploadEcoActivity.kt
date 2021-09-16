@@ -60,7 +60,7 @@ UploadEcoActivity : AppCompatActivity() {
             }else{
                 requestPermission()
             }
-            // 2. 카메라로 찍은 사진 확인
+            // 2. 카메라로 찍은 사진 확인 -> 자동
             // 3. 찍은 사진을 Classifier에 전송
         }
 
