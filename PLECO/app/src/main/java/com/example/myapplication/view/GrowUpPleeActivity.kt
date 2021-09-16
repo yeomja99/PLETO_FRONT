@@ -65,7 +65,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
         Log.d("UserEmail", email)
         var econameIntent: Intent = getIntent()
 
-        Log.d("econame", "hasExtra" + (econameIntent.hasExtra("eco_label")))
+        Log.d("econame", "hasExtra: " + (econameIntent.hasExtra("eco_label")))
         if (econameIntent.hasExtra("eco_label")) {
             var kr_econame: String = econameIntent.getStringExtra("eco_label")
             Log.d("econame", "" + kr_econame)
@@ -76,21 +76,20 @@ class GrowUpPleeActivity : AppCompatActivity() {
         // 코루틴 참고 사이트 : http://www.gisdeveloper.co.kr/?p=10279
         GlobalScope.launch(Dispatchers.Main) {
             async(Dispatchers.IO) {
-                if (ecoName == null){
+                if (econameIntent.hasExtra("eco_label") == true) {
+                    status = checkPleeStatus(SendPleeStatus(email, ecoName))
+                    delay(500)
                     GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
                     GetPleeList(email)// COMPLETE 플리 리스트 Get
-                } else{
-                    status = checkPleeStatus(SendPleeStatus(email, ecoName))
+                } else {
                     GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
                     GetPleeList(email)// COMPLETE 플리 리스트 Get
                 }
-
-
             }.await()
             async(Dispatchers.Main) {
                 delay(500)
                 Log.d("---isexsited", ": " + isexsited)
-                test(email)
+                GrowUpPleeFun(email)
             }.await()
 
 
@@ -148,7 +147,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun test(email: String) {
+    fun GrowUpPleeFun(email: String) {
         Log.d("---existedPleeList", ": " + existedPleeList.size)
         if (isexsited == "false") {  // 자라는 플리가 없을 때
             Log.d("isexsited", "" + isexsited)
@@ -163,7 +162,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 nextStateTextView.setText("1단계까지")
                 // 새로운 플리 생성
                 val postdata = PleeStateData()
-                val newPleeName = tutorialPleeList[0] // 플리 랜덤 추출
+                val newPleeName = tutorialPleeList[0] // 튜토리얼 플리
                 postdata.pleeName = newPleeName
                 postdata.completeCount = tutorialnum
                 Log.d("state", "새로운 플리 생성: " + newPleeName)
@@ -184,20 +183,24 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 val pleeTextView: TextView = findViewById(R.id.view_pleename)
                 val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
 
-                Log.d("state", "---existedPleeList: " + existedPleeList)
+                Log.d("state", "---existedPleeList: " + existedPleeList.size)
                 // 새로운 플리 생성
                 val postdata = PleeStateData()
 
                 val new_pleelist = allPleeList
 
-                for (i in 0..allPleeList.size - existedPleeList.size - 1) {
+                for (i in 0..existedPleeList.size - 1) {
                     val name: String = existedPleeList[i].pleeName!!
                     new_pleelist.remove(name)
                 }
 
+                for (i in 0..new_pleelist.size - 1) {
+                    Log.d("state", "new_pleelist: " + new_pleelist[i])
+                }
                 val random = Random()
-                val randomNum = random.nextInt(new_pleelist.size - 1)
-                Log.d("random num", ": " + randomNum)
+                val randomNum = random.nextInt(new_pleelist.size - 0)
+                Log.d("state", "random num: " + randomNum)
+                Log.d("state", ":" +  new_pleelist.size)
                 val newPleeName = new_pleelist[randomNum] // 플리 랜덤 추출
 
                 postdata.pleeName = newPleeName
@@ -405,11 +408,29 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     call: Call<PleeId>,
                     response: Response<PleeId>
                 ) {   // 통신 성공
-                    val result = response.body()
-                    Log.d("PostPlee", " " + result)
-                    Log.d("PostPlee", " " + response.code())
                     if (response.isSuccessful) {
                         val result = response.body()
+                        Log.d("PostPlee", " " + result)
+                        Log.d("PostPlee", " " + response.code())
+                    } else {
+                        val converter: Converter<ResponseBody, LogInErrorMessage> =
+                            (application as MasterApplication).retrofit.responseBodyConverter(
+                                LogInErrorMessage::class.java, arrayOfNulls<Annotation>(0)
+                            )
+
+                        val error: LogInErrorMessage
+
+                        try {
+                            error = converter.convert(response.errorBody())!!
+                            Log.e("error message", error.getErrorMessage())
+                            Toast.makeText(
+                                this@GrowUpPleeActivity,
+                                error.getErrorMessage(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
 
                 }
@@ -444,6 +465,25 @@ class GrowUpPleeActivity : AppCompatActivity() {
                         status = result!!
                         Log.d("checkPleeStatus", "" + status.pleeStatus)
                         Log.d("checkPleeStatus", "" + status.pleeName)
+                    } else {
+                        val converter: Converter<ResponseBody, LogInErrorMessage> =
+                            (application as MasterApplication).retrofit.responseBodyConverter(
+                                LogInErrorMessage::class.java, arrayOfNulls<Annotation>(0)
+                            )
+
+                        val error: LogInErrorMessage
+
+                        try {
+                            error = converter.convert(response.errorBody())!!
+                            Log.e("error message", error.getErrorMessage())
+                            Toast.makeText(
+                                this@GrowUpPleeActivity,
+                                error.getErrorMessage(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             })
