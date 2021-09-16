@@ -9,19 +9,23 @@ class GrowPleeData(
 
 class PleeStateData(
     var pleeName: String? = null,
-    var completeCount: Int? = null
+    var completeCount: Long? = null
 ) : Serializable
 
-class PleeDictData(
-    var pleeList: Array<String>? = null
+class PleeId(
+    var pleeId: Long? = null
+) : Serializable
+
+class PleeName(
+    var pleeName: String? = null
 ) : Serializable
 
 class SendPleeStatus(
     var email: String? = null,
-    var ecoName: String? = null,
-    var pleeName: String? = null
+    var ecoName: String? = null
 ) : Serializable
 
 class PleeStatus(
+    var pleeName: String? = null,
     var pleeStatus: String? = null
 ) : Serializable
