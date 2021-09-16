@@ -16,8 +16,8 @@ class PleeId(
     var pleeId: Long? = null
 ) : Serializable
 
-class PleeDictData(
-    var pleeList: List<String>? = null
+class PleeName(
+    var pleeName: String? = null
 ) : Serializable
 
 class SendPleeStatus(

@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     tools:context=".view.PleeListActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="pleelist"/>
+        android:text="pleelist" />
 
     <LinearLayout
         android:id="@+id/Pleelist_bottom_navigation_tab"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
@@ -26,8 +27,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
 
         <ImageView
             android:id="@+id/pleelist_Camera"
@@ -35,8 +35,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_cam_off" />
+
 
         <ImageView
             android:id="@+id/pleelist_Growup"
@@ -44,8 +44,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_grow_off" />
+
 
         <ImageView
             android:id="@+id/pleelist_Userinfo"
@@ -53,10 +53,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
-    </LinearLayout>
+            android:background="@color/colorBtnBackGround"
+            app:srcCompat="@drawable/ic_btn_plee_book_on" />
 
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

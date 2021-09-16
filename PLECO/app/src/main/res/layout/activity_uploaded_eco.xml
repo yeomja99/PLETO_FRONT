@@ -8,19 +8,20 @@
     tools:context=".view.UploadedEcoActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/iv_templete"
         android:layout_width="350dp"
         android:layout_height="400dp"
         android:background="@color/colorWhite"
         android:elevation="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <!--    android:background="@drawable/shadow">-->
 
         <ImageView
-            android:id="@+id/iv_food"
+            android:id="@+id/iv_eco"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:background="#000000"
@@ -38,60 +39,47 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_food">
+            app:layout_constraintTop_toBottomOf="@+id/iv_eco">
 
             <TextView
-                android:id="@+id/tv_food_name"
+                android:id="@+id/tv_eco_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginStart="100dp"
                 android:text="TextView"
                 android:textColor="@color/colorBlack"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/btn_rename"
+                app:layout_constraintRight_toLeftOf="@+id/btn_retake_photo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_rename"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="100dp"
-                app:srcCompat="@drawable/ic_btn_rename"
+                android:id="@+id/btn_retake_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/tv_food_name"
+                app:layout_constraintLeft_toRightOf="@id/tv_eco_name"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_btn_rename" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btn_save"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="150dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:elevation="10dp"
-        app:srcCompat="@drawable/ic_btn_search" />
-
-    <ImageView
+    <ImageButton
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="150dp"
-        app:layout_constraintLeft_toRightOf="@+id/btn_search"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:elevation="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#00000000"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_templete"
         app:srcCompat="@drawable/ic_btn_save" />
 
     <LinearLayout
@@ -99,8 +87,8 @@
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -110,8 +98,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
 
         <ImageView
             android:id="@+id/Camera2_Camera"
@@ -119,17 +106,16 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="#CEE8CB"
+            app:srcCompat="@drawable/ic_btn_eco_cam_on" />
 
         <ImageView
             android:id="@+id/Camera2_Growup"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_grow_off" />
 
         <ImageView
             android:id="@+id/Camera2_Userinfo"
@@ -137,10 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_plee_book_off" />
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

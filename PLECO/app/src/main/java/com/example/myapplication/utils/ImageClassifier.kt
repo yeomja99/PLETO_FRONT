@@ -88,6 +88,7 @@ private fun loadModelFile(assets: AssetManager, modelFilename: String): MappedBy
         return Single.just(bitmap).flatMap {
             convertBitmapToByteBuffer(it)
             Log.d("트라이","convertBitmapToByteBuffer 성공적")
+//            Log.d("트라이",)
             interpreter?.run(imgData, labelProb)
             Log.d("트라이","interpreter run 성공적") // --> run이 안되는 에러 해결
             val pq = PriorityQueue<Result>(3,
