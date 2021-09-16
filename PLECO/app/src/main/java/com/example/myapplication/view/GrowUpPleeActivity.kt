@@ -164,7 +164,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 val postdata = PleeStateData()
                 val newPleeName = tutorialPleeList[0] // 튜토리얼 플리
                 postdata.pleeName = newPleeName
-                postdata.completeCount = tutorialnum
+                postdata.completeCount = tutorialnum * 2
                 Log.d("state", "새로운 플리 생성: " + newPleeName)
 
                 // 새로운 플리에 해당하는 이미지 찾기
@@ -177,8 +177,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                 PostPlee(postdata, email)
             } else { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
-                Toast.makeText(this@GrowUpPleeActivity, "새로운 플리를 만나볼까요?", Toast.LENGTH_LONG)
-                    .show()
+
                 val pleeImageView: ImageView = findViewById(R.id.view_plee)
                 val pleeTextView: TextView = findViewById(R.id.view_pleename)
                 val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
@@ -194,9 +193,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     new_pleelist.remove(name)
                 }
 
-                for (i in 0..new_pleelist.size - 1) {
-                    Log.d("state", "new_pleelist: " + new_pleelist[i])
-                }
                 val random = Random()
                 val randomNum = random.nextInt(new_pleelist.size - 0)
                 Log.d("state", "random num: " + randomNum)
@@ -207,20 +203,22 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 postdata.completeCount = missionnum1 + missionnum2
                 Log.d("state", "complete plee가 존재할 때: " + newPleeName)
 
-                // 새로운 플리에 해당하는 이미지 찾기
-                var pleeid: Int = getResources("drawable/", newPleeName + "_0")
+                PostPlee(postdata, email)
+
+                // 새로 생성한 플리 전에 완성된 플리 보여주기
+                var cpleename : String = existedPleeList[existedPleeList.size - 1].pleeName!!
+                var pleeid: Int = getResources("drawable/", cpleename + "_2")
                 pleeImageView.setImageResource(pleeid)
-                pleeTextView.setText(newPleeName)
-                nextStateTextView.setText("1단계까지")
+                pleeTextView.setText(cpleename)
+                nextStateTextView.setText("성장 완료")
 
                 var progressbar: ProgressBar = state_bar
-                progressbar.setProgress(0)
+                progressbar.setProgress(100)
 
-                PostPlee(postdata, email)
             }
 
         } else { // 자라는 플리가 있을 때
-            if (user_growingPlee.pleeName == "ms_sun") {
+            if (user_growingPlee.pleeName == "mr_min") {
                 if (user_growingPlee.ecoCount == 0.toLong()) {
                     Log.d("state", "tutorialplee: growing")
                     val tutorialImageView: ImageView = findViewById(R.id.view_plee)
@@ -236,8 +234,23 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     var progressbar: ProgressBar = state_bar
                     progressbar.setProgress(0)
                 }
+                else if (user_growingPlee.ecoCount == 1.toLong()) {
+                    Log.d("state", "tutorialplee: growing")
+                    val tutorialImageView: ImageView = findViewById(R.id.view_plee)
+                    val tutorialTextView: TextView = findViewById(R.id.view_pleename)
+                    val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
+                    nextStateTextView.setText("성장 완료까지")
+
+                    // 새로운 플리에 해당하는 이미지 찾기
+                    var pleeid: Int = getResources("drawable/", user_growingPlee.pleeName + "_1")
+                    tutorialImageView.setImageResource(pleeid)
+                    tutorialTextView.setText(user_growingPlee.pleeName)
+
+                    var progressbar: ProgressBar = state_bar
+                    progressbar.setProgress(0)
+                }
             }
-            if (user_growingPlee.ecoCount!! < missionnum1) { // 0 --> 1단계 수행중
+            else if (user_growingPlee.ecoCount!! < missionnum1) { // 0 --> 1단계 수행중
                 Toast.makeText(this@GrowUpPleeActivity, "성장할고얏!", Toast.LENGTH_LONG)
                     .show()
                 val GrowPleeImageView: ImageView = findViewById(R.id.view_plee)
