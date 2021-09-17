@@ -37,6 +37,7 @@ class
 UploadEcoActivity : AppCompatActivity() {
 //    private val CHOOSE_IMAGE = 1001
     private val labelList = ArrayList<String>()
+    private val confidenceList = ArrayList<Int>()
     private lateinit var photoImage: Bitmap
     private lateinit var photoImageURI: Uri
     private lateinit var classifier: ImageClassifier

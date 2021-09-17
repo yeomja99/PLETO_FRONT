@@ -102,13 +102,17 @@ private fun loadModelFile(assets: AssetManager, modelFilename: String): MappedBy
             }
 
 
-            val recognitions = ArrayList<Result>()
+            val recognitions = ArrayList<Result>() // 반환되는 분류 결과 Result List
 
 
-            val recognitionsSize = Math.min(pq.size, MAX_RESULTS)
+            val recognitionsSize = Math.min(pq.size, MAX_RESULTS) // 높은 결과 순으로 정렬하는 과정
 
 
             for (i in 0 until recognitionsSize) recognitions.add(pq.poll())
+
+            // 2-1. 에코백, 텀블러가 80% 이상인 경우 미션 인정(mission 에 값부여)
+            Log.d("Recognitons",Single.just(recognitions).toString())
+            // 2-2. 에코백, 텀블러가 80% 미만인데 2,3순위 confidence가 10% 미만인 경우 미션 인정
 
             return@flatMap Single.just(recognitions)
         }
