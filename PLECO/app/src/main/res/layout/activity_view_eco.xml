@@ -12,16 +12,17 @@
     <ScrollView
         android:id="@+id/sv_mission_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="650dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ecogallery_bottom_navigation_tab"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_mission"
@@ -62,6 +63,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
+            android:background="@color/colorBackGround"
             app:srcCompat="@drawable/ic_btn_eco_cam_off" />
 
         <ImageView
@@ -70,6 +72,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
+            android:background="@color/colorBackGround"
             app:srcCompat="@drawable/ic_btn_grow_off" />
 
         <ImageView
@@ -78,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
+            android:background="@color/colorBackGround"
             app:srcCompat="@drawable/ic_btn_plee_book_off" />
     </LinearLayout>
 

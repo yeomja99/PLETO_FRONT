@@ -14,7 +14,7 @@
         android:textSize="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="150dp"
-        android:textColor="#8BC34A"
+        android:textColor="@color/colorDarkGreen"
         android:textStyle="bold"/>
 
     <EditText
@@ -52,14 +52,13 @@
         android:id="@+id/login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LogIn"
-        android:textSize="30dp"
-        android:textStyle="bold"
         android:layout_gravity="center"
-        android:padding="10dp"
         android:layout_marginTop="40dp"
+        android:background="@color/colorDarkGreen"
+        android:padding="10dp"
+        android:text="LogIn"
         android:textColor="#FFFFFF"
-        android:background="#8BC34A"
-        />
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 </LinearLayout>

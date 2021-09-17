@@ -82,7 +82,7 @@ class SignInActivity : AppCompatActivity() {
                             saveUserEmail(email, this@SignInActivity)
                             Log.d("SavedUserEmail", email)
                             startActivity(
-                                Intent(this@SignInActivity, MainActivity::class.java)
+                                Intent(this@SignInActivity, GrowUpPleeActivity::class.java)
                             )
                         }
                     }

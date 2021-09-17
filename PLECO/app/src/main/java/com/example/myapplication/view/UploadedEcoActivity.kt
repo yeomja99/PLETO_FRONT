@@ -50,7 +50,7 @@ class UploadedEcoActivity : AppCompatActivity() {
         var intentToGrowUpPleeActivity = Intent(this, GrowUpPleeActivity::class.java)
 
 
-//       // Rename Food Photo
+//       // Rename Eco Photo -> 추후 삭제
         tv_eco_name.setOnClickListener{
             labelidx ++
             if (labelidx < labelList.size)

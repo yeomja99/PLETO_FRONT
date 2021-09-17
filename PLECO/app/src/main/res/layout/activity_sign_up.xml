@@ -14,7 +14,7 @@
         android:textSize="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="150dp"
-        android:textColor="#8BC34A"
+        android:textColor="@color/colorDarkGreen"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="닉네임을 입력하세요"
-            android:textColorHint="#575656"/>
+            android:hint="아이디를 입력하세요"
+            android:textColorHint="#575656" />
 
         <Button
             android:id="@+id/nickname_ok_btn"
@@ -41,8 +41,8 @@
             android:text="중복 확인"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:textColor="#009688"
-            android:background="#CDDC39"
+            android:textColor="@color/colorDarkGreen"
+            android:background="@color/colorBtnBackGround"
             />
 
     </LinearLayout>
@@ -80,7 +80,7 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:layout_marginTop="40dp"
-        android:background="#8BC34A"
+        android:background="@color/colorDarkGreen"
         />
 
 </LinearLayout>
