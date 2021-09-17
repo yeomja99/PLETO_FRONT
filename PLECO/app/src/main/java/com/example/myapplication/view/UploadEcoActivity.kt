@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -51,6 +52,12 @@ UploadEcoActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.horizon_exit, R.anim.none)
 
         setContentView(R.layout.activity_upload_eco)
+
+        if (intent.hasExtra("fail")){
+            Log.d("Fail 인텐트","실패")
+            Toast.makeText(this@UploadEcoActivity, "에코백 혹은 텀블러를 인증해주세요!", Toast.LENGTH_LONG).show()
+        }
+
         classifier = ImageClassifier(getAssets()) //이미지 분류기
 
         iv_none.setOnClickListener {

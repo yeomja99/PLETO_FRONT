@@ -110,10 +110,6 @@ private fun loadModelFile(assets: AssetManager, modelFilename: String): MappedBy
 
             for (i in 0 until recognitionsSize) recognitions.add(pq.poll())
 
-            // 2-1. 에코백, 텀블러가 80% 이상인 경우 미션 인정(mission 에 값부여)
-            Log.d("Recognitons",Single.just(recognitions).toString())
-            // 2-2. 에코백, 텀블러가 80% 미만인데 2,3순위 confidence가 10% 미만인 경우 미션 인정
-
             return@flatMap Single.just(recognitions)
         }
     }

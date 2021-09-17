@@ -24,7 +24,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="50dp"
-        android:hint="이메일을 입력하세요"
+        android:hint="아이디를 입력하세요"
         android:textColorHint="#575656"/>
 
     <EditText
@@ -45,7 +45,7 @@
         android:text="회원가입"
         android:textSize="15dp"
         android:textColor="#575656"
-        android:layout_marginLeft="290dp"
+        android:layout_marginLeft="300dp"
         />
 
     <TextView
@@ -59,6 +59,7 @@
         android:text="LogIn"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:elevation="10dp"/>
 
 </LinearLayout>
