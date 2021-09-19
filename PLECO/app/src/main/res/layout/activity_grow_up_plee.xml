@@ -23,23 +23,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.core.widget.ContentLoadingProgressBar
 
                 android:id="@+id/state_bar"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="350dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:indeterminateTint="@color/colorBtnBackGround"
+                android:progressTint="@color/colorDarkGreen"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/progressbar_layou"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nextstate_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="15dp"
                 android:layout_gravity="right"/>
 
 
@@ -66,12 +67,6 @@
             android:id="@+id/view_plee"
             android:layout_width="300dp"
             android:layout_height="300dp" />
-
-        <TextView
-            android:id="@+id/view_pleename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp" />
 
 
     </LinearLayout>
