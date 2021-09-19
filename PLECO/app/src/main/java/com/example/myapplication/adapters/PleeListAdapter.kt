@@ -65,6 +65,7 @@ class PleeListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+
         val view = LayoutInflater.from(context).inflate(R.layout.item_list_plee, parent, false)
         return ItemViewHolder(view)
     }
