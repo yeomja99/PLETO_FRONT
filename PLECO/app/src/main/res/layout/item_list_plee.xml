@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#5EB8C0"
+            android:textColor="#44653D"
             android:text="no.번호"
             android:layout_gravity="center" />
 
@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:text="플리"
             android:layout_margin="4dp"
-            android:textColor="#5EB8C0"
+            android:textColor="#44653D"
             android:textStyle="bold"/>
 
     </LinearLayout>
