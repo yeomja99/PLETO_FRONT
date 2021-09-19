@@ -60,7 +60,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_grow_plee">
 
 
         <ImageView
@@ -79,7 +80,8 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorBackGround">
 
         <ImageView
             android:id="@+id/Growup_EcoGallery"
@@ -87,7 +89,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            app:srcCompat="@drawable/ic_btn_eco_list_off" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off"/>
 
         <ImageView
             android:id="@+id/Growup_Camera"
