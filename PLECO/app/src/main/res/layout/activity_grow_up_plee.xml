@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     tools:context=".view.GrowUpPleeActivity">
 
     <LinearLayout
@@ -22,24 +23,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.core.widget.ContentLoadingProgressBar
 
                 android:id="@+id/state_bar"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="350dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:indeterminateTint="@color/colorBtnBackGround"
+                android:progressTint="@color/colorDarkGreen"
                 android:max="100"
-                android:progress="70"
-                android:progressDrawable="@drawable/progressbar_layou"
+                android:progress="0"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nextstate_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="3단계까지"
+                android:textSize="15dp"
                 android:layout_gravity="right"/>
 
 
@@ -65,15 +66,7 @@
         <ImageView
             android:id="@+id/view_plee"
             android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:src="@drawable/example_plant" />
-
-        <TextView
-            android:id="@+id/view_pleename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="plee name"
-            android:textSize="30dp" />
+            android:layout_height="300dp" />
 
 
     </LinearLayout>
@@ -94,8 +87,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBackGround"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_list_off" />
 
         <ImageView
             android:id="@+id/Growup_Camera"
@@ -103,8 +95,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorBlack"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_eco_cam_off" />
 
         <ImageView
             android:id="@+id/Growup"
@@ -112,8 +103,9 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorItem"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="@color/colorBtnBackGround"
+            app:srcCompat="@drawable/ic_btn_grow_on" />
+
 
         <ImageView
             android:id="@+id/Growup_Userinfo"
@@ -121,8 +113,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_weight="0.25"
-            android:background="@color/colorDarkGray"
-            android:src="@drawable/ic_launcher_foreground" />
+            app:srcCompat="@drawable/ic_btn_plee_book_off" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
