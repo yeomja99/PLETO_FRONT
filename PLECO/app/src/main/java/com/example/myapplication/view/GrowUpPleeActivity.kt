@@ -2,26 +2,26 @@ package com.example.myapplication.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
-import com.example.myapplication.communication.*
+import com.example.myapplication.communication.LogInErrorMessage
+import com.example.myapplication.communication.MasterApplication
+import com.example.myapplication.communication.Token
 import com.example.myapplication.utils.*
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
-import kotlinx.android.synthetic.main.activity_plee_list.*
 import kotlinx.coroutines.*
-import okhttp3.Dispatcher
 import okhttp3.ResponseBody
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Converter
+import retrofit2.Response
 import java.io.IOException
-import java.lang.StrictMath.random
 import java.util.*
 
 
