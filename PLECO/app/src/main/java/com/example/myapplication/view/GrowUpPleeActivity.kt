@@ -28,8 +28,9 @@ import java.util.*
 val tutorialnum: Long = 1// 튜토리얼 미션 횟수 저장 변수
 val missionnum1: Long = 2// 1단계 미션 횟수 저장 변수
 val missionnum2: Long = 5// 2단계 미션 횟수 저장 변수
+val endingnum: Long = 9 + 1// ending 보여주기 위해 9개 플리 완성시 1을 한 번 더 더해줌으로써 모든 플리가 성장 완료임을 알리기
 var user_growingPlee = GrowPleeData()
-
+var pleecnt: Long = 0
 
 class GrowUpPleeActivity : AppCompatActivity() {
     private var tutorialPleeList: Array<String> =
@@ -148,7 +149,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
     }
 
     fun GrowUpPleeFun(email: String) {
-        Log.d("---existedPleeList", ": " + existedPleeList.size)
         if (isexsited == "false") {  // 자라는 플리가 없을 때
             Log.d("isexsited", "" + isexsited)
             //1) 새로운 플리 생성
@@ -176,13 +176,18 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 progressbar.setProgress(0)
 
                 PostPlee(postdata, email)
-            } else { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
+                pleecnt += 1 // 프론트 쪽에서 플리 개수 카운트
+                Log.d("pleecnt","튜토리얼 플리: "+pleecnt)
+
+            } else if (existedPleeList.size > 0 && existedPleeList.size < allPleeList.size + tutorialPleeList.size) { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
 
                 val pleeImageView: ImageView = findViewById(R.id.view_plee)
                 //val pleeTextView: TextView = findViewById(R.id.view_pleename)
                 val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
 
                 Log.d("state", "---existedPleeList: " + existedPleeList.size)
+                Log.d("state", "---allpleelist: " + allPleeList.size)
+
                 // 새로운 플리 생성
                 val postdata = PleeStateData()
 
@@ -196,7 +201,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 val random = Random()
                 val randomNum = random.nextInt(new_pleelist.size - 0)
                 Log.d("state", "random num: " + randomNum)
-                Log.d("state", ":" +  new_pleelist.size)
+                Log.d("state", ":" + new_pleelist.size)
                 val newPleeName = new_pleelist[randomNum] // 플리 랜덤 추출
 
                 postdata.pleeName = newPleeName
@@ -204,9 +209,10 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 Log.d("state", "complete plee가 존재할 때: " + newPleeName)
 
                 PostPlee(postdata, email)
+                pleecnt += 1 // 프론트 쪽에서 플리 개수 카운트
 
                 // 새로 생성한 플리 전에 완성된 플리 보여주기
-                var cpleename : String = existedPleeList[existedPleeList.size - 1].pleeName!!
+                var cpleename: String = existedPleeList[existedPleeList.size - 1].pleeName!!
                 var pleeid: Int = getResources("drawable/", cpleename + "_2")
                 pleeImageView.setImageResource(pleeid)
                 //pleeTextView.setText(cpleename)
@@ -215,6 +221,34 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 var progressbar: ProgressBar = state_bar
                 progressbar.setProgress(100)
 
+                Log.d("pleecnt","아직 진행중: "+pleecnt)
+
+            } else if (existedPleeList.size == allPleeList.size + tutorialPleeList.size) { // 모든 플리를 다 성장시킨 경우
+                Log.d("pleecnt","모든 플리 성장 완료: "+pleecnt)
+                if (pleecnt == 9.toLong()) {
+                    // 새로 생성한 플리 전에 완성된 플리 보여주기
+                    var cpleename: String = existedPleeList[existedPleeList.size - 1].pleeName!!
+                    var pleeid: Int = getResources("drawable/", cpleename + "_2")
+                    view_plee.setImageResource(pleeid)
+                    //pleeTextView.setText(cpleename)
+                    nextstate_textview.setText("성장 완료")
+
+                    var progressbar: ProgressBar = state_bar
+                    progressbar.setProgress(100)
+                    pleecnt += 1
+                } else if (pleecnt == endingnum) {
+                    Log.d("모든 플리 성장 완료", "---existedPleeList: " + existedPleeList.size)
+                    Log.d(
+                        "모든 플리 성장 완료",
+                        "---allpleelist: " + allPleeList.size + tutorialPleeList.size
+                    )
+                    val finishImageView: ImageView = findViewById(R.id.allpleeview)
+                    var pleeid: Int = getResources("drawable/", "allplee")
+                    finishImageView.setImageResource(pleeid)
+
+                    var progressbar: ProgressBar = state_bar
+                    progressbar.setProgress(100)
+                }
             }
 
         } else { // 자라는 플리가 있을 때
@@ -263,7 +297,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
                 var GrowingRate = ((user_growingPlee.ecoCount!!) * 100) / missionnum1
 
-                nextStateTextView.setText("2단계까지 "+GrowingRate.toInt().toString()+"% 도달")
+                nextStateTextView.setText("2단계까지 " + GrowingRate.toInt().toString() + "% 도달")
                 var pleeid: Int = getResources("drawable/", user_growingPlee.pleeName!! + "_0")
                 GrowPleeImageView.setImageResource(pleeid)
                 //GrowPleeTextView.setText(user_growingPlee.pleeName)
@@ -298,7 +332,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 val nextStateTextView: TextView = findViewById(R.id.nextstate_textview)
                 var GrowingRate = ((user_growingPlee.ecoCount!! - missionnum1) * 100) / missionnum2
 
-                nextStateTextView.setText("성장 완료까지 "+GrowingRate.toInt().toString()+"% 도달")
+                nextStateTextView.setText("성장 완료까지 " + GrowingRate.toInt().toString() + "% 도달")
 
                 var pleeid: Int = getResources("drawable/", user_growingPlee.pleeName!! + "_1")
                 GrowPleeImageView.setImageResource(pleeid)
@@ -502,11 +536,11 @@ class GrowUpPleeActivity : AppCompatActivity() {
                         try {
                             error = converter.convert(response.errorBody())!!
                             Log.e("error message", error.getErrorMessage())
-                            Toast.makeText(
-                                this@GrowUpPleeActivity,
-                                error.getErrorMessage(),
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                this@GrowUpPleeActivity,
+//                                error.getErrorMessage(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
