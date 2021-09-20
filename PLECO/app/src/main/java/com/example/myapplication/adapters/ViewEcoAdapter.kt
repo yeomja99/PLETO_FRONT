@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.utils.Photo
+import kotlinx.android.synthetic.main.activity_uploaded_eco.*
 
 
 class ViewEcoAdapter(private var ecoList: ArrayList<Photo>) :
@@ -19,13 +21,13 @@ class ViewEcoAdapter(private var ecoList: ArrayList<Photo>) :
 
 
     class MyPageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val iv_eco = itemView?.findViewById<ImageView>(R.id.iv_eco_item)
+        val iv_eco_item = itemView?.findViewById<ImageView>(R.id.iv_eco_item)
         val tv_eco = itemView?.findViewById<TextView>(R.id.tv_fname_item)
 
 
         fun bind(photo: Photo) {
             Log.d("리사이클러뷰 끼우기", photo.uri.toString() + photo.eco_id)
-            iv_eco.setImageURI(photo.uri.toUri())
+            iv_eco_item.setImageURI(photo.uri.toUri())
             tv_eco.setText(photo.eco_id)
 
         }

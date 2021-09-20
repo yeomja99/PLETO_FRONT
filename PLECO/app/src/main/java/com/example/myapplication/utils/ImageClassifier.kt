@@ -102,10 +102,10 @@ private fun loadModelFile(assets: AssetManager, modelFilename: String): MappedBy
             }
 
 
-            val recognitions = ArrayList<Result>()
+            val recognitions = ArrayList<Result>() // 반환되는 분류 결과 Result List
 
 
-            val recognitionsSize = Math.min(pq.size, MAX_RESULTS)
+            val recognitionsSize = Math.min(pq.size, MAX_RESULTS) // 높은 결과 순으로 정렬하는 과정
 
 
             for (i in 0 until recognitionsSize) recognitions.add(pq.poll())
