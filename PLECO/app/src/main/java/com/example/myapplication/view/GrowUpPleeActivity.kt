@@ -357,7 +357,9 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
-                            Log.e("error message", error.getErrorMessage())
+                            if(error.getErrorMessage() != null){
+                                Log.e("error message", error.getErrorMessage())
+                            }
                             Toast.makeText(
                                 this@GrowUpPleeActivity,
                                 error.getErrorMessage(),
@@ -435,7 +437,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
-                            Log.e("error message", error.getErrorMessage())
+//                            Log.e("error message", error.getErrorMessage())
                             Toast.makeText(
                                 this@GrowUpPleeActivity,
                                 error.getErrorMessage(),
