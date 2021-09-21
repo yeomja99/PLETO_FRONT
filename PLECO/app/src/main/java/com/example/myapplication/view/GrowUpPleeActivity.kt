@@ -404,12 +404,14 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
+
                             Log.e("error message", error.getErrorMessage())
 //                            Toast.makeText(
 //                                this@GrowUpPleeActivity,
 //                                error.getErrorMessage(),
 //                                Toast.LENGTH_LONG
 //                            ).show()
+
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -482,7 +484,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
-                            Log.e("error message", error.getErrorMessage())
+//                            Log.e("error message", error.getErrorMessage())
                             Toast.makeText(
                                 this@GrowUpPleeActivity,
                                 error.getErrorMessage(),
