@@ -6,15 +6,19 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.utils.Photo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_uploaded_eco.*
 import java.lang.reflect.Type
-
+import com.bumptech.glide.RequestBuilder
+import kotlinx.coroutines.delay
 
 class UploadedEcoActivity : AppCompatActivity() {
     private val CHOOSE_IMAGE = 1001
@@ -29,7 +33,7 @@ class UploadedEcoActivity : AppCompatActivity() {
    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       overridePendingTransition(R.anim.none, R.anim.horizon_exit)
+        overridePendingTransition(R.anim.none, R.anim.horizon_exit)
         setContentView(R.layout.activity_uploaded_eco)
         photoImage = intent.getParcelableExtra("image")
         Log.d("이미지", photoImage.toString())
@@ -38,66 +42,85 @@ class UploadedEcoActivity : AppCompatActivity() {
         imageUri = intent.getStringExtra("uri")
         Log.d("이미지in업로디드", imageUri)
 
-        if (intent.hasExtra("image") || intent.hasExtra("label") || intent.hasExtra("uri")) {
-            iv_eco.setImageBitmap(photoImage)
+       // Intent uploaded food activity
+       var intentToUpload = Intent(this, UploadEcoActivity::class.java)
+       var intentToGrowUpPleeActivity = Intent(this, GrowUpPleeActivity::class.java)
+
+       if (labelList[0].equals("미션 실패")){
+            intentToUpload.putExtra("fail",1)
+            startActivity(intentToUpload)
+            this@UploadedEcoActivity.finish()
+        }
+
+       if (intent.hasExtra("image") || intent.hasExtra("label") || intent.hasExtra("uri")) {
+            // 1. 에코백, 텀블러가 85% 이상인 경우 미션 인정(mission 에 값부여)
+            // Result.kt 에 예외처리
+
+            // 3-1. 에코백, 텀블러일 경우 mission에 값을 넣음 (뒤에 intent putextra mission으로 수정)
+            // 3-2. 에코백, 텀블러가 아닌 경우
+            // 토스트 메시지로 에코백, 텀블러가 아님을 알림
+            // intent UploadEcoActivity
+
+
+            // 이미지 rotate 방지를 위한 코드
+            val imguri = imageUri.toUri()
+            Glide.with(this).load(imguri).override(500,500).fitCenter().into(iv_eco)
+
+            //iv_eco.setImageBitmap(photoImage)
             tv_eco_name.text = labelList[labelidx]
         } else {
             Toast.makeText(this, "Image Error!", Toast.LENGTH_SHORT).show()
         }
 
-        // Intent uploaded food activity
-        var intentToUpload = Intent(this, UploadEcoActivity::class.java)
-        var intentToGrowUpPleeActivity = Intent(this, GrowUpPleeActivity::class.java)
 
 
-//       // Rename Food Photo
-        tv_eco_name.setOnClickListener{
+    //       // Rename Eco Photo -> 추후 삭제
+        /*tv_eco_name.setOnClickListener{
             labelidx ++
             if (labelidx < labelList.size)
                 tv_eco_name.text = labelList[labelidx]
             else
                 labelidx = 0
                 tv_eco_name.text = labelList[labelidx]
-        }
+        }*/
 
 
        // Save Image
        // Use Shared Preferences : string array
        // key(img uri) + food name
-//       btn_save.setOnClickListener{
-//           // Saves image URI as string to Default Shared Preferences
-//           var photos = ReadPhotosData()!!
-//           var dup = 0
-//
-//           Log.d("이미지 sp in Uploaded", photos.toString())
-//
-//           for (photo in ReadPhotosData()) {
-//               // 중복 저장 방지를 위한 mode 추가
-//               if (photo?.uri == imageUri)
-//                   dup = 1
-//               Log.d("이미지데이터 in Uploaded",photo?.uri + " : " + photo?.eco_id + "\n") // 잘 받아와 진당 ㅠㅠㅠㅠㅠㅠㅠ
-//           }
-//
-//           if (dup == 0 ){
-//               // 이미지가 sp에 없을 경우 저장
-//               photos.add(Photo(imageUri, labelList[labelidx]))
-//               SavePhotoData(photos)
-//               startActivity(intentToView)
-//           }
-//           else {
-//               Toast.makeText(this, "이미 존재하는 사진입니다.", Toast.LENGTH_LONG).show()
-//               startActivity(intentToUpload)
-//           }
-//
-//           this@UploadedEcoActivity.finish()
-//
-//
-//           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
-//       }
+    //       btn_save.setOnClickListener{
+    //           // Saves image URI as string to Default Shared Preferences
+    //           var photos = ReadPhotosData()!!
+    //           var dup = 0
+    //
+    //           Log.d("이미지 sp in Uploaded", photos.toString())
+    //
+    //           for (photo in ReadPhotosData()) {
+    //               // 중복 저장 방지를 위한 mode 추가
+    //               if (photo?.uri == imageUri)
+    //                   dup = 1
+    //               Log.d("이미지데이터 in Uploaded",photo?.uri + " : " + photo?.eco_id + "\n") // 잘 받아와 진당 ㅠㅠㅠㅠㅠㅠㅠ
+    //           }
+    //
+    //           if (dup == 0 ){
+    //               // 이미지가 sp에 없을 경우 저장
+    //               photos.add(Photo(imageUri, labelList[labelidx]))
+    //               SavePhotoData(photos)
+    //               startActivity(intentToView)
+    //           }
+    //           else {
+    //               Toast.makeText(this, "이미 존재하는 사진입니다.", Toast.LENGTH_LONG).show()
+    //               startActivity(intentToUpload)
+    //           }
+    //
+    //           this@UploadedEcoActivity.finish()
+    //
+    //
+    //           overridePendingTransition(R.anim.horizon_exit, R.anim.none)
+    //       }
 
        btn_retake_photo.setOnClickListener{
-           var camera22camera_intent: Intent = Intent(this, UploadEcoActivity::class.java)
-           startActivity(camera22camera_intent)
+           startActivity(intentToUpload)
            this@UploadedEcoActivity.finish()
 
            overridePendingTransition(R.anim.horizon_exit, R.anim.none)
@@ -122,9 +145,6 @@ class UploadedEcoActivity : AppCompatActivity() {
                // 이미지가 sp에 없을 경우 저장
                photos.add(Photo(imageUri, labelList[labelidx]))
                SavePhotoData(photos)
-
-               // label을 판독
-
 
                // label이 에코백 or 텀블러라고 판정날 경우 GrowUp으로 전송
                intentToGrowUpPleeActivity.putExtra("eco_label", labelList[labelidx])
