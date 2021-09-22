@@ -404,12 +404,14 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
+
                             Log.e("error message", error.getErrorMessage())
 //                            Toast.makeText(
 //                                this@GrowUpPleeActivity,
 //                                error.getErrorMessage(),
 //                                Toast.LENGTH_LONG
 //                            ).show()
+
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -482,12 +484,12 @@ class GrowUpPleeActivity : AppCompatActivity() {
 
                         try {
                             error = converter.convert(response.errorBody())!!
-                            Log.e("error message", error.getErrorMessage())
-                            Toast.makeText(
-                                this@GrowUpPleeActivity,
-                                error.getErrorMessage(),
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Log.e("error message", error.getErrorMessage())
+//                            Toast.makeText(
+//                                this@GrowUpPleeActivity,
+//                                error.getErrorMessage(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -499,7 +501,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
     }
 
     // POST ChcekStatus == performEco, 미션 수행하는 함수
-    // SendPleeStatus(email, econame, pleename) 보내면 status(COMPLETE인지 GROWING인지) 받는 함수
+    // SendPleeStatus(email, econame) 보내면 status(COMPLETE인지 GROWING인지) 받는 함수
     suspend fun checkPleeStatus(sendpleestatus: SendPleeStatus): PleeStatus {
         var status = PleeStatus()
         Log.d("checkPleeStatus", "1단계 통과:" + sendpleestatus.ecoName)
@@ -536,11 +538,11 @@ class GrowUpPleeActivity : AppCompatActivity() {
                         try {
                             error = converter.convert(response.errorBody())!!
                             Log.e("error message", error.getErrorMessage())
-//                            Toast.makeText(
-//                                this@GrowUpPleeActivity,
-//                                error.getErrorMessage(),
-//                                Toast.LENGTH_LONG
-//                            ).show()
+                            Toast.makeText(
+                                this@GrowUpPleeActivity,
+                                error.getErrorMessage(),
+                                Toast.LENGTH_LONG
+                            ).show()
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }

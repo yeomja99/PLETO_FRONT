@@ -34,14 +34,27 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        initView(this@SignInActivity)
 
-        goSignUpBtn.setOnClickListener {
+
+        if (checkIsLogin()){
             startActivity(
-                Intent(this@SignInActivity, SignUpActivity::class.java)
+                Intent(this@SignInActivity, GrowUpPleeActivity::class.java)
             )
+            finish()
         }
+        else {
+            initView(this@SignInActivity)
+            goSignUpBtn.setOnClickListener {
+                startActivity(
+                    Intent(this@SignInActivity, SignUpActivity::class.java)
+                )
+            }
 
+            LogIn()
+        }
+    }
+
+    fun LogIn() {
         logInBtn.setOnClickListener {
             val email = getEmail()
             val password = getPassword()
@@ -135,5 +148,15 @@ class SignInActivity : AppCompatActivity() {
 
     fun getPassword(): String {
         return password.text.toString()
+    }
+
+    fun checkIsLogin(): Boolean {
+        val sp = getSharedPreferences("login_token", Context.MODE_PRIVATE) // sp에서 값을 가져옴
+        val token = sp.getString("login_token", "null")
+        if (token != null) {
+            Token.token = token
+        }
+        Log.d("Check User Token: ", " "+token)
+        return token != "null"  // 토큰이 null이 아니면 true, null이면 false 반환
     }
 }
