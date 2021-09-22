@@ -36,13 +36,13 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-        if (checkIsLogin()){
-            startActivity(
-                Intent(this@SignInActivity, GrowUpPleeActivity::class.java)
-            )
-            finish()
-        }
-        else {
+//        if (checkIsLogin()){
+//            startActivity(
+//                Intent(this@SignInActivity, GrowUpPleeActivity::class.java)
+//            )
+//            finish()
+//        }
+//        else {
             initView(this@SignInActivity)
             goSignUpBtn.setOnClickListener {
                 startActivity(
@@ -51,7 +51,7 @@ class SignInActivity : AppCompatActivity() {
             }
 
             LogIn()
-        }
+//        }
     }
 
     fun LogIn() {
