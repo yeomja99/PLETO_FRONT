@@ -74,15 +74,20 @@ class GrowUpPleeActivity : AppCompatActivity() {
         // 코루틴 참고 사이트 : http://www.gisdeveloper.co.kr/?p=10279
         GlobalScope.launch(Dispatchers.Main) {
             async(Dispatchers.IO) {
-                if (econameIntent.hasExtra("eco_label") == true) {
-                    status = checkPleeStatus(SendPleeStatus(email, ecoName))
-                    delay(500)
-                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
-                    GetPleeList(email)// COMPLETE 플리 리스트 Get
-                } else {
-                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
-                    GetPleeList(email)// COMPLETE 플리 리스트 Get
-                }
+//                if (econameIntent.hasExtra("eco_label") == true) {
+//                    status = checkPleeStatus(SendPleeStatus(email, ecoName))
+//                    delay(500)
+//                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+//                    GetPleeList(email)// COMPLETE 플리 리스트 Get
+//                } else {
+//                    GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+//                    GetPleeList(email)// COMPLETE 플리 리스트 Get
+//                }
+
+                status = checkPleeStatus(SendPleeStatus(email, "ecoBag"))
+                delay(500)
+                GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
+                GetPleeList(email)// COMPLETE 플리 리스트 Get
 
             }.await()
             async(Dispatchers.Main) {
