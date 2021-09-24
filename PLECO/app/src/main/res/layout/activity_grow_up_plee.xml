@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackGround"
-    tools:context=".view.GrowUpPleeActivity">
+    tools:context=".view.GrowUpPleeActivity"
+    android:id="@+id/main_growup_view">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -20,6 +21,7 @@
 
         <!--    progress: 상태가 변하기 전 초기값 설정-->
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -69,7 +71,6 @@
 
 
     </LinearLayout>
-
     <ImageView
         android:id="@+id/allpleeview"
         android:layout_width="wrap_content"
@@ -79,6 +80,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="80dp"
+        />
+
+    <TextView
+        android:id="@+id/show_finish_plee"
+        android:elevation="10dp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/allpleeview"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/colorDarkGreen"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"
         />
 
 
