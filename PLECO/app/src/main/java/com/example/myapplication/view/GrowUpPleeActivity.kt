@@ -2,12 +2,10 @@ package com.example.myapplication.view
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.communication.LogInErrorMessage
@@ -17,6 +15,7 @@ import com.example.myapplication.utils.*
 import kotlinx.android.synthetic.main.activity_grow_up_plee.*
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Converter
@@ -28,9 +27,7 @@ import java.util.*
 val tutorialnum: Long = 1// 튜토리얼 미션 횟수 저장 변수
 val missionnum1: Long = 2// 1단계 미션 횟수 저장 변수
 val missionnum2: Long = 5// 2단계 미션 횟수 저장 변수
-val endingnum: Long = 9 + 1// ending 보여주기 위해 9개 플리 완성시 1을 한 번 더 더해줌으로써 모든 플리가 성장 완료임을 알리기
 var user_growingPlee = GrowPleeData()
-var pleecnt: Long = 0
 
 class GrowUpPleeActivity : AppCompatActivity() {
     private var tutorialPleeList: Array<String> =
@@ -86,6 +83,7 @@ class GrowUpPleeActivity : AppCompatActivity() {
                     GetGrowingPleeData(email)  // 자라는 플리 정보(플리 이름, 미션 진행 횟수) Get
                     GetPleeList(email)// COMPLETE 플리 리스트 Get
                 }
+
             }.await()
             async(Dispatchers.Main) {
                 delay(500)
@@ -176,9 +174,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 progressbar.setProgress(0)
 
                 PostPlee(postdata, email)
-                pleecnt += 1 // 프론트 쪽에서 플리 개수 카운트
-                Log.d("pleecnt","튜토리얼 플리: "+pleecnt)
-
             } else if (existedPleeList.size > 0 && existedPleeList.size < allPleeList.size + tutorialPleeList.size) { // COMPLETE plee 가 있다면 -> 그거 제외하고 플리 생성
 
                 val pleeImageView: ImageView = findViewById(R.id.view_plee)
@@ -209,7 +204,6 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 Log.d("state", "complete plee가 존재할 때: " + newPleeName)
 
                 PostPlee(postdata, email)
-                pleecnt += 1 // 프론트 쪽에서 플리 개수 카운트
 
                 // 새로 생성한 플리 전에 완성된 플리 보여주기
                 var cpleename: String = existedPleeList[existedPleeList.size - 1].pleeName!!
@@ -221,27 +215,26 @@ class GrowUpPleeActivity : AppCompatActivity() {
                 var progressbar: ProgressBar = state_bar
                 progressbar.setProgress(100)
 
-                Log.d("pleecnt","아직 진행중: "+pleecnt)
 
             } else if (existedPleeList.size == allPleeList.size + tutorialPleeList.size) { // 모든 플리를 다 성장시킨 경우
-                Log.d("pleecnt","모든 플리 성장 완료: "+pleecnt)
-                if (pleecnt == 9.toLong()) {
-                    // 새로 생성한 플리 전에 완성된 플리 보여주기
-                    var cpleename: String = existedPleeList[existedPleeList.size - 1].pleeName!!
-                    var pleeid: Int = getResources("drawable/", cpleename + "_2")
-                    view_plee.setImageResource(pleeid)
-                    //pleeTextView.setText(cpleename)
-                    nextstate_textview.setText("성장 완료")
+                // 새로 생성한 플리 전에 완성된 플리 보여주기
+                var cpleename: String = existedPleeList[existedPleeList.size - 1].pleeName!!
+                var pleeid: Int = getResources("drawable/", cpleename + "_2")
+                view_plee.setImageResource(pleeid)
+                //pleeTextView.setText(cpleename)
+                nextstate_textview.setText("성장 완료")
 
-                    var progressbar: ProgressBar = state_bar
-                    progressbar.setProgress(100)
-                    pleecnt += 1
-                } else if (pleecnt == endingnum) {
-                    Log.d("모든 플리 성장 완료", "---existedPleeList: " + existedPleeList.size)
-                    Log.d(
-                        "모든 플리 성장 완료",
-                        "---allpleelist: " + allPleeList.size + tutorialPleeList.size
-                    )
+                var progressbar: ProgressBar = state_bar
+                progressbar.setProgress(100)
+
+                show_finish_plee.setText("엔딩 보기!")
+                show_finish_plee.setBackgroundResource(getResources("drawable/","round_style"))
+
+                show_finish_plee.setOnClickListener {
+                    linearLayout1.removeView(state_bar)
+                    linearLayout1.removeView(nextstate_textview)
+                    linearLayout3.removeView(view_plee)
+                    main_growup_view.removeView(show_finish_plee)
                     val finishImageView: ImageView = findViewById(R.id.allpleeview)
                     var pleeid: Int = getResources("drawable/", "allplee")
                     finishImageView.setImageResource(pleeid)
