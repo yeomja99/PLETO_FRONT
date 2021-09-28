@@ -43,6 +43,7 @@ class SignInActivity : AppCompatActivity() {
 //            finish()
 //        }
 //        else {
+
         initView(this@SignInActivity)
         goSignUpBtn.setOnClickListener {
             startActivity(
@@ -51,6 +52,7 @@ class SignInActivity : AppCompatActivity() {
         }
 
         LogIn()
+
 //        }
     }
 
